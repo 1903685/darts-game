@@ -1,10 +1,10 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
+#include <cstdint>
 #include <ctime>
 #include "Defines.h"
 #include "Board.h"
+#include "Player.h"
+#include "GenericPlayer.h"
 
 using namespace std;
 
@@ -27,6 +27,17 @@ int main()
 
 	cin.get();
 
+	/*int test[100] = {0};
+
+	C std int types
+
+	int[8-16-32-64]_t		signed ints
+	uint[8-16-32-64]_t		unsigned ints
+	
+	test[50];
+
+	*(test + 50 * sizeof(int));*/
+
 	return 0;
 }
 
@@ -35,7 +46,7 @@ ostream& operator<<(ostream& os, const Board& Board)
 	/*Matrix board = Board.GetBoard();
 
 	Column::iterator col_iter;
-	Matrix::iterator row_iter;
+	Matrix::iterator row_iter; 
 
 	for (row_iter = board.begin(); row_iter != board.begin(); row_iter++) {
 		for (col_iter = row_iter->begin(); col_iter != row_iter->end(); col_iter++) {

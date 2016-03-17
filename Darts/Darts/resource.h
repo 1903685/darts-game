@@ -10,7 +10,6 @@
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
-#define BULL							50
-#define OUTER							25
+
 #endif
 #endif

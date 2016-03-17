@@ -1,18 +1,21 @@
 #pragma once
-using namespace std;
+#ifndef BOARD_H
+#define BOARD_H
 
 class Board
 {
 public:
-	Board(int score = 501, int rows = 2, int columns = 21);
+	Board(uint16_t score = 501);
 	~Board();
 
 	friend std::ostream& operator<<(std::ostream& os, const Board& Board);
 
-	void SetScore(int& score);
-	int* GetScore();
-	const Matrix& GetBoard() const;
-	const Matrix::iterator& GetFirst();
+	void SetScore(int16_t& score);
+	//void SubtractScore(int16_t points);
+	int16_t* GetScore();
+	const uint16_t GetAtPosition(uint16_t x, uint16_t y) const;
+	/*const Matrix& GetBoard() const;
+	const Matrix::iterator& GetFirst();*/
 	void Display();
 	void Populate();
 
@@ -21,10 +24,13 @@ protected:
 	Matrix _board(int rows, Row());*/
 	//std::vector<int> _columns;
 	//std::vector< std::vector<int> > _board;
-	Column::iterator col_iter;
+	/*Column::iterator col_iter;
 	Matrix::iterator row_iter;
-	Matrix _board;
+	Matrix _board;*/
 
-	int _score;
+	int16_t _score;
+
+	uint16_t _bd[2][21];
 };
 
+#endif /* BOARD_H*/

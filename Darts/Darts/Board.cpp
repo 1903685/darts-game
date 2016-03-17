@@ -1,71 +1,97 @@
 #include <iostream>
-#include <vector>
-#include <iterator>
+#include <cstdint>
+#include <ctime>
 #include "Defines.h"
 #include "Board.h"
 
 using namespace std;
 
-Board::Board(int score, int rows, int columns) :
-_board(rows, Column(columns))
+Board::Board(uint16_t score) :
+//_board(rows, Column(columns))
+_score(score)
 {
 	Populate();
 }
-
-
-//Board::Board(int score, int rows, int columns)
-//{
-//	Populate();
-//}
-
-//Board::Board()
-//{
-//	Populate();
-//}
 
 Board::~Board()
 {
 	cout << "Board destructor called";
 }
 
-int* Board::GetScore()
+//Board::Board(int score, int rows, int columns)
+//{
+//	Populate();
+//}
+
+int16_t* Board::GetScore()
 {
 	return &_score;
 }
 
-void Board::SetScore(int& score)
+void Board::SetScore(int16_t& score)
 {
 	_score = score;
 }
 
-const Matrix& Board::GetBoard() const
-{
-	return _board;
-}
+//void Board::SubtractScore(int16_t points)
+//{
+//	_score - points;
+//}
 
-const Matrix::iterator& Board::GetFirst()
+const uint16_t Board::GetAtPosition(uint16_t x, uint16_t y) const
 {
-	return _board.begin();
+	return _bd[x][y];
 }
 
 void Board::Display()
 {
-	/*for (auto i : _board)
+	for (uint8_t i = 0; i < X; ++i)
 	{
-		cout << i << endl;
-	}*/
+		for (uint8_t j = 0; j < Y; ++j)
+		{
+			cout << _bd[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void Board::Populate()
+{
+	uint16_t bd[2][21] = { { 0, 20, 15, 17, 18, 12, 13, 19, 16, 14, 6, 8, 9, 4, 11, 10, 7, 2, 1, 3, 5 },
+	                  { 0, 18, 17, 19, 13, 20, 10, 16, 11, 12, 15, 14, 5, 6, 9, 2, 8, 3, 4, 7, 1 } };
+	
+	
+	for (uint8_t i = 0; i < X; ++i)
+	{
+		for (uint8_t j = 0; j < Y; ++j)
+		{
+			_bd[i][j] = bd[i][j];
+		}
+	}
+}
+
+//const Matrix& Board::GetBoard() const
+//{
+//	return _board;
+//}
+//
+//const Matrix::iterator& Board::GetFirst()
+//{
+//	return _board.begin();
+//}
+
 
 	/*vector< vector<int> >::iterator row_iter;
 	vector<int>::iterator col_iter;*/
 
-	for (row_iter = _board.begin(); row_iter != _board.end(); row_iter++)
+	/*for (row_iter = _board.begin(); row_iter != _board.end(); row_iter++)
 	{
 		for (col_iter = row_iter->begin(); col_iter != row_iter->end(); col_iter++) 
 		{
 			cout << *col_iter << " ";
 		}
 		cout << endl;
-	}
+	}*/
 
 	/*for (int i = 0; i < 2; ++i)
 	{
@@ -75,21 +101,7 @@ void Board::Display()
 		}
 		cout << endl;
 	}*/
-}
 
-void Board::Populate()
-{
-	int bd[2][21] = { { 0, 20, 15, 17, 18, 12, 13, 19, 16, 14, 6, 8, 9, 4, 11, 10, 7, 2, 1, 3, 5 },
-	                  { 0, 18, 17, 19, 13, 20, 10, 16, 11, 12, 15, 14, 5, 6, 9, 2, 8, 3, 4, 7, 1 } };
-
-	for (int i = 0; i < 2; ++i) 
-	{
-		for (int j = 0; j < 21; ++j)
-		{
-			_board[i][j] = bd[i][j];
-		}
-	}
-}
 
 //int throw_single(int d)
 //{//  return result of throwing for single d with accuracy 88% (or 80% for the outer)
