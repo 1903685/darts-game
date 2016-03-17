@@ -3,8 +3,8 @@
 #include <ctime>
 #include "Defines.h"
 #include "Board.h"
-#include "Player.h"
 #include "GenericPlayer.h"
+#include "Player.h"
 
 using namespace std;
 

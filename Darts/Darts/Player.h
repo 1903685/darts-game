@@ -1,10 +1,6 @@
 #pragma once
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "Defines.h"
-#include "Board.h"
-#include "Player.h"
-#include "GenericPlayer.h"
 
 class Player : public GenericPlayer
 {
@@ -13,9 +9,9 @@ public:
 	~Player();
 
 	virtual uint16_t ThrowSingle(uint16_t d, const Board& board);
-	/*virtual uint16_t ThrowDouble(uint16_t d, const Board& board);
+	virtual uint16_t ThrowDouble(uint16_t d, const Board& board);
 	virtual uint16_t ThrowTriple(uint16_t d, const Board& board);
-	virtual uint16_t ThrowBull(uint16_t percentage);*/
+	virtual uint16_t ThrowBull(uint16_t percentage);
 
 protected:
 	bool HitDouble;
