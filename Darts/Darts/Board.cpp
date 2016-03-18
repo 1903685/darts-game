@@ -7,6 +7,7 @@
 using namespace std;
 
 Board::Board(uint16_t score) :
+//Board::Board(int score, int rows, int columns)
 //_board(rows, Column(columns))
 _score(score)
 {
@@ -18,12 +19,7 @@ Board::~Board()
 	cout << "Board destructor called";
 }
 
-//Board::Board(int score, int rows, int columns)
-//{
-//	Populate();
-//}
-
-int16_t* Board::GetScore()
+const int16_t* Board::GetScore() const
 {
 	return &_score;
 }

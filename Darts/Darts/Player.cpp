@@ -8,16 +8,9 @@
 
 using namespace std;
 
-Player::Player(bool hitDouble, bool hitTriple, bool hitOuter, bool hitBull) :
-	HitDouble(hitDouble), 
-	HitTriple(hitTriple), 
-	HitOuter(hitOuter),
-	HitBull(hitBull)
-{}
+Player::Player() {}
 
-Player::~Player()
-{
-}
+Player::~Player() {}
 
 void Player::ThrowSingle(uint16_t d, Board& board)
 {
@@ -162,10 +155,46 @@ void Player::ThrowBull(uint16_t percentage, Board& board)
 	}
 }
 
-void Player::SimpleStrategy(Board& board)
+void Player::AimTon80(Board& board) //Aim to score 180
 {
-	uint16_t d = 0;
-	cout << "Aim: " << endl;
-	cin >> d;
-	ThrowSingle(d, board);
+	ThrowTriple(20, board);
+	ThrowTriple(20, board);
+	ThrowTriple(20, board);
+}
+
+void Player::AimCheckout141(Board& board) //Aim to score 141
+{
+	ThrowTriple(20, board);
+	ThrowTriple(19, board);
+	ThrowDouble(12, board);
+}
+
+void Player::AimThree167s(Board& board) //Aim to score 167
+{
+	ThrowTriple(20, board);
+	ThrowTriple(19, board);
+	ThrowBull(80, board);
+}
+
+void Player::NineDartFinish1(Board& board)
+{
+	/*do {
+		cout << "Aim: ";
+		cin >> d;
+		cout << endl;
+		Fail = cin.fail();
+
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	} while (Fail);*/
+	AimTon80(board);
+	AimTon80(board);
+	AimCheckout141(board);
+}
+
+void Player::NineDartFinish2(Board& board)
+{
+	AimTon80(board);
+	AimTon80(board);
+	AimThree167s(board);
 }

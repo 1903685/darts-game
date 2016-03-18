@@ -12,7 +12,7 @@ public:
 
 	void SetScore(int16_t& score);
 	void SubtractScore(int16_t points);
-	int16_t* GetScore();
+	const int16_t* GetScore() const;
 	const uint16_t GetAtPosition(uint16_t x, uint16_t y) const;
 	/*const Matrix& GetBoard() const;
 	const Matrix::iterator& GetFirst();*/
