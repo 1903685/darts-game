@@ -1,11 +1,12 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#define TON 100
-#define BULL 50
-#define OUTER 25
-#define X 2
-#define Y 21
+const uint16_t TON = 100;
+const uint16_t BULL = 50;
+const uint16_t OUTER = 25;
+const uint16_t X = 2;
+const uint16_t Y = 21;
+
 //typedef std::vector<int> Column;	// One Column of the matrix
 //typedef std::vector<Column> Matrix; // Matrix: a vector of Columns
 //typedef std::vector<int>::iterator col_iter;

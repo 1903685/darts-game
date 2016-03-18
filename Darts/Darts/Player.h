@@ -2,6 +2,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "GenericPlayer.h"
+class Board;
+
 class Player : public GenericPlayer
 {
 public:
@@ -9,9 +12,9 @@ public:
 	~Player();
 
 	virtual uint16_t ThrowSingle(uint16_t d, const Board& board);
-	virtual uint16_t ThrowDouble(uint16_t d, const Board& board);
-	virtual uint16_t ThrowTriple(uint16_t d, const Board& board);
-	virtual uint16_t ThrowBull(uint16_t percentage);
+	//virtual uint16_t ThrowDouble(uint16_t d, const Board& board);
+	//virtual uint16_t ThrowTriple(uint16_t d, const Board& board);
+	//virtual uint16_t ThrowBull(uint16_t percentage);
 
 protected:
 	bool HitDouble;

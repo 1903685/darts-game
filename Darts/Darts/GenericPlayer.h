@@ -2,14 +2,12 @@
 #ifndef GENERICPLAYER_H
 #define GENERICPLAYER_H
 
-#include "Board.h"
-#include "Player.h"
+class Board;
 
 class GenericPlayer
 {
 public:
-	GenericPlayer() {}
-	virtual ~GenericPlayer() = 0;
+	virtual ~GenericPlayer() {}
 
 	virtual uint16_t ThrowSingle(uint16_t d, const Board& board) = 0;
 	virtual uint16_t ThrowDouble(uint16_t d, const Board& board) = 0;

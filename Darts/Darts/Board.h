@@ -30,7 +30,7 @@ protected:
 
 	int16_t _score;
 
-	uint16_t _bd[2][21];
+	uint16_t _bd[X][Y];
 };
 
 #endif /* BOARD_H*/
