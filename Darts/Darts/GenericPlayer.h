@@ -13,6 +13,9 @@ public:
 	virtual uint16_t ThrowDouble(uint16_t d, const Board& board) = 0;
 	virtual uint16_t ThrowTriple(uint16_t d, const Board& board) = 0;
 	virtual uint16_t ThrowBull(uint16_t percentage) = 0;
+
+	virtual void SimpleStrategy(const Board& board) = 0;
+	virtual void AdvancedStrategy(const Board& board) = 0;
 };
 
 #endif
