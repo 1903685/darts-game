@@ -9,13 +9,13 @@ class GenericPlayer
 public:
 	virtual ~GenericPlayer() {}
 
-	virtual uint16_t ThrowSingle(uint16_t d, const Board& board) = 0;
-	virtual uint16_t ThrowDouble(uint16_t d, const Board& board) = 0;
-	virtual uint16_t ThrowTriple(uint16_t d, const Board& board) = 0;
-	virtual uint16_t ThrowBull(uint16_t percentage) = 0;
+	virtual void ThrowSingle(uint16_t d, Board& board) = 0;
+	virtual void ThrowDouble(uint16_t d, Board& board) = 0;
+	virtual void ThrowTriple(uint16_t d, Board& board) = 0;
+	virtual void ThrowBull(uint16_t percentage, Board& board) = 0;
 
-	virtual void SimpleStrategy(const Board& board) = 0;
-	virtual void AdvancedStrategy(const Board& board) = 0;
+	virtual void SimpleStrategy( Board& board) = 0;
+	virtual void AdvancedStrategy( Board& board) = 0;
 };
 
 #endif

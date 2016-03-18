@@ -33,10 +33,10 @@ void Board::SetScore(int16_t& score)
 	_score = score;
 }
 
-//void Board::SubtractScore(int16_t points)
-//{
-//	_score - points;
-//}
+void Board::SubtractScore(int16_t points)
+{
+	_score - points;
+}
 
 const uint16_t Board::GetAtPosition(uint16_t x, uint16_t y) const
 {
