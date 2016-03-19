@@ -4,8 +4,6 @@
 #include "Defines.h"
 #include "Board.h"
 
-using namespace std;
-
 Board::Board(uint16_t score) :
 //Board::Board(int score, int rows, int columns)
 //_board(rows, Column(columns))
@@ -16,7 +14,12 @@ _score(score)
 
 Board::~Board()
 {
-	cout << "Board destructor called";
+	std::cout << "Board destructor called";
+}
+
+void Board::DisplayScore()
+{
+	std::cout << _score;
 }
 
 const int16_t* Board::GetScore() const
@@ -31,7 +34,7 @@ void Board::SetScore(int16_t& score)
 
 void Board::SubtractScore(int16_t points)
 {
-	_score - points;
+	(_score - points);
 }
 
 const uint16_t Board::GetAtPosition(uint16_t x, uint16_t y) const
@@ -45,9 +48,9 @@ void Board::Display()
 	{
 		for (uint8_t j = 0; j < Y; ++j)
 		{
-			cout << _bd[i][j] << " ";
+			std::cout << _bd[i][j] << " ";
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 }
 

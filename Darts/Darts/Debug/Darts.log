@@ -1,17 +1,20 @@
-﻿Build started 18/03/2016 19:45:28.
+﻿Build started 19/03/2016 16:33:51.
      1>Project "\\vmwfil04\students$\1502616\Darts\Darts\Darts\Darts.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Board.cpp Main.cpp Player.cpp
-         Player.cpp
-         Board.cpp
-     1>\\vmwfil04\students$\1502616\darts\darts\darts\board.cpp(38): warning C4552: '-' : operator has no effect; expected operator with side-effect
-         Generating Code...
-         Compiling...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp Main.cpp Player.cpp
          Main.cpp
          Generating Code...
+         Compiling...
+         Player.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         Game.cpp
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\Darts.res" Darts.rc 
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\vmwfil04\students$\1502616\Darts\Darts\Debug\Darts.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\vmwfil04\students$\1502616\Darts\Darts\Debug\Darts.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\vmwfil04\students$\1502616\Darts\Darts\Debug\Darts.lib" /MACHINE:X86 Debug\Darts.res
          Debug\Board.obj
+         Debug\Game.obj
          Debug\Main.obj
          Debug\Player.obj
          Darts.vcxproj -> \\vmwfil04\students$\1502616\Darts\Darts\Debug\Darts.exe
@@ -19,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.64
+Time Elapsed 00:00:01.81

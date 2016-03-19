@@ -8,19 +8,10 @@ class Board;
 class Player : public GenericPlayer
 {
 public:
-	Player();
+	Player(std::string name = "");
 	~Player();
 
-	virtual void NineDartFinish1(Board& board);
-	virtual void NineDartFinish2(Board& board);
-
-protected:
-	uint16_t d = 0;           //variable to hold players aim
-	bool Fail = false;        //variable for method allowing only numeric input
-	bool HitDouble = false;
-	bool HitTriple = false;
-	bool HitOuter = false;
-	bool HitBull = false;
+	virtual void SetName(std::string name);
 
 	virtual void ThrowSingle(uint16_t d, Board& board);
 	virtual void ThrowDouble(uint16_t d, Board& board);
@@ -29,6 +20,20 @@ protected:
 	virtual void AimTon80(Board& board);
 	virtual void AimCheckout141(Board& board);
 	virtual void AimThree167s(Board& board);
+
+	virtual void NineDartFinish1(Board& board);
+	virtual void NineDartFinish2(Board& board);
+
+private:
+	Board board;
+	uint16_t d = 0;           //variable to hold player's aim
+	//bool Fail = false;        //variable for method allowing only numeric input
+	std::string _name;
+	bool HitDouble = false;
+	bool HitTriple = false;
+	bool HitOuter = false;
+	bool HitBull = false;
+
 };
 
 

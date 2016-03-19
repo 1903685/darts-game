@@ -2,6 +2,7 @@
 #ifndef GENERICPLAYER_H
 #define GENERICPLAYER_H
 
+#include <string>
 class Board;
 
 class GenericPlayer
@@ -9,6 +10,7 @@ class GenericPlayer
 public:
 	virtual ~GenericPlayer() {}
 
+	virtual void SetName(std::string name) = 0;
 	virtual void ThrowSingle(uint16_t d, Board& board) = 0;
 	virtual void ThrowDouble(uint16_t d, Board& board) = 0;
 	virtual void ThrowTriple(uint16_t d, Board& board) = 0;
@@ -19,7 +21,7 @@ public:
 
 	virtual void NineDartFinish1(Board& board) = 0;
 	virtual void NineDartFinish2(Board& board) = 0;
-	virtual void AdvancedStrategy( Board& board) = 0;
+	//virtual void AdvancedStrategy( Board& board) = 0;
 };
 
 #endif

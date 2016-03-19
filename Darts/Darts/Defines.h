@@ -1,6 +1,8 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+#include <cstdint>
+
 const uint16_t TON = 100;
 const uint16_t BULL = 50;
 const uint16_t OUTER = 25;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdint>
 #include <ctime>
+#include <string>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"
@@ -8,9 +9,16 @@
 
 using namespace std;
 
-Player::Player() {}
+Player::Player(string name) : 
+	_name(name)
+{}
 
 Player::~Player() {}
+
+void Player::SetName(string name)
+{
+	_name = name;
+}
 
 void Player::ThrowSingle(uint16_t d, Board& board)
 {
@@ -117,6 +125,7 @@ void Player::ThrowTriple(uint16_t d, Board& board)
 	if (r <= 70) // 70% chance for triple
 	{
 		board.SubtractScore(3 * d); //subtract triple score
+		//(*board.GetScore()) - 3 * d;
 	}
 	else if (r > 70 && r <= 80) //10% chance for scoring triple left
 	{

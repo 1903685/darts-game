@@ -8,8 +8,9 @@ public:
 	Board(uint16_t score = 501);
 	~Board();
 
-	friend std::ostream& operator<<(std::ostream& os, const Board& Board);
-
+	//friend ostream& operator<<(ostream& os, const Board& Board);
+	
+	void DisplayScore();
 	void SetScore(int16_t& score);
 	void SubtractScore(int16_t points);
 	const int16_t* GetScore() const;
@@ -19,7 +20,7 @@ public:
 	void Display();
 	void Populate();
 
-protected:
+private:
 	/*Row(columns);
 	Matrix _board(int rows, Row());*/
 	//std::vector<int> _columns;
