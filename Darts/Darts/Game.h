@@ -2,6 +2,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <string>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"
@@ -16,14 +17,12 @@ public:
 	Game();
 	~Game();
 
-	void Play(Board &Board1, Board &Board2); //Plays the game of darts
+	void Play(Board &Board1); //Plays the game of darts
 
 private:
-	Board _board1;
-	Board _board2;
-
-	Player _player1;
-	Player _player2;
+	Board _board;
+	Player _one;
+	Player _two;
 };
 
 #endif GAME_H

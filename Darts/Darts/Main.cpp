@@ -13,23 +13,21 @@ ostream& operator<<(ostream& os, const Board& Board);
 
 int main()
 {
-	Board board1;
-	Board board2;
-	//board.Display();
+	srand(static_cast<unsigned int>(time(0)));
+
+	Board board;
 	
 	/*Matrix my_matrix(4, Column(5));
 	my_matrix = { { 12 }, { 12 } };
 	cout << my_matrix[1][0];*/
 	
+	/*GenericPlayer *pGenericPlayer = new Player(501, "Geoarge");
+
+	pGenericPlayer->NineDartFinish1(board);
+	cout << pGenericPlayer->GetScore();*/
+	
 	Game game;
-
-	//game.Play(board1, board2);
-
-	Player one("George");
-	one.NineDartFinish1(board1);
-	one.ThrowTriple(20, board1);
-
-	cout << (*board1.GetScore());
+	game.Play(board);
 
 	cin.get();
 

@@ -3,31 +3,19 @@
 
 Game::Game()
 {
-	_player1.SetName("Player 1");
-	_player2.SetName("Player 2");
-	_board1.Populate();
-	_board2.Populate();
+	_one.SetName("George");
 }
 
 
 Game::~Game()
 {}
 
-void Game::Play(Board &Board1, Board &Board2)
+void Game::Play(Board &Board)
 {
-	_player1.SetName("Player 1");
-	_player2.SetName("Player 2");
-	
-	_player1.ThrowBull(100, Board1);
-	_player1.ThrowTriple(20, Board1);
-	_player1.ThrowTriple(20, Board1);
-	_player1.ThrowTriple(20, Board1);
-	_player1.ThrowTriple(20, Board1);
-	_player1.ThrowTriple(20, Board1);
-	_player1.ThrowTriple(20, Board1);
-	_player1.ThrowTriple(20, Board1);
+	std::cout << _one.GetName() << std::endl;;
+	std::cout << _one.GetScore() << std::endl;
 
-	Board1.DisplayScore();
-	uint16_t score = *(Board1.GetScore());
-	std::cout << score;
+	_one.NineDartFinish1(Board);
+	std::cout << std::endl;
+	_two.NineDartFinish2(Board);
 }

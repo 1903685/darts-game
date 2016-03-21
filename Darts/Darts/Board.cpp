@@ -4,10 +4,9 @@
 #include "Defines.h"
 #include "Board.h"
 
-Board::Board(uint16_t score) :
+Board::Board() 
 //Board::Board(int score, int rows, int columns)
 //_board(rows, Column(columns))
-_score(score)
 {
 	Populate();
 }
@@ -15,26 +14,6 @@ _score(score)
 Board::~Board()
 {
 	std::cout << "Board destructor called";
-}
-
-void Board::DisplayScore()
-{
-	std::cout << _score;
-}
-
-const int16_t* Board::GetScore() const
-{
-	return &_score;
-}
-
-void Board::SetScore(int16_t& score)
-{
-	_score = score;
-}
-
-void Board::SubtractScore(int16_t points)
-{
-	(_score - points);
 }
 
 const uint16_t Board::GetAtPosition(uint16_t x, uint16_t y) const
