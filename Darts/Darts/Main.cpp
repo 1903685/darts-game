@@ -14,8 +14,6 @@ ostream& operator<<(ostream& os, const Board& Board);
 int main()
 {
 	srand(static_cast<unsigned int>(time(0)));
-
-	Board board;
 	
 	/*Matrix my_matrix(4, Column(5));
 	my_matrix = { { 12 }, { 12 } };
@@ -27,7 +25,8 @@ int main()
 	cout << pGenericPlayer->GetScore();*/
 	
 	Game game;
-	game.Play(board);
+	//game.Play();
+	game.PlayAdvancedStrategy();
 
 	cin.get();
 

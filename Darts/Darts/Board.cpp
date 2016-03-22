@@ -8,12 +8,13 @@ Board::Board()
 //Board::Board(int score, int rows, int columns)
 //_board(rows, Column(columns))
 {
+	std::cout << "Board constructor called!\n";
 	Populate();
 }
 
 Board::~Board()
 {
-	std::cout << "Board destructor called";
+	std::cout << "Board destructor called\n";
 }
 
 const uint16_t Board::GetAtPosition(uint16_t x, uint16_t y) const

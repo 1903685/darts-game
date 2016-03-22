@@ -14,6 +14,9 @@ public:
 	virtual void SetScore(int16_t score);
 	virtual void SubtractScore(int16_t points);
 	virtual int16_t GetScore();
+	virtual bool IsOdd(uint16_t n);
+	virtual bool IsEven(uint16_t n);
+	virtual bool CheckWin();
 
 	virtual std::string GetName();
 	virtual void SetName(std::string name);
@@ -21,7 +24,9 @@ public:
 	virtual void ThrowSingle(uint16_t d, Board& board);
 	virtual void ThrowDouble(uint16_t d, Board& board);
 	virtual void ThrowTriple(uint16_t d, Board& board);
-	virtual void ThrowBull(uint16_t percentage, Board& board);
+	virtual void ThrowBullPercentage(uint16_t percentage, Board& board);
+	virtual void ThrowBull(uint16_t r);
+	virtual void ThrowOuter(uint16_t r);
 	virtual void AimTon80(Board& board);
 	virtual void AimCheckout141(Board& board);
 	virtual void AimThree167s(Board& board);
@@ -29,7 +34,7 @@ public:
 	virtual void NineDartFinish1(Board& board);
 	virtual void NineDartFinish2(Board& board);
 
-	virtual void AdvancedStrategy(Board& board);
+	//virtual void AdvancedStrategy(Board& board);
 
 private:
 	//uint16_t _score;
