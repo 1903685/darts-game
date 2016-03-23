@@ -30,5 +30,5 @@ private:
 	bool NineDartFinish = true;
 };
 
-#endif GAME_H
+#endif
 

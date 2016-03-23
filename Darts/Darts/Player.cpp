@@ -76,7 +76,11 @@ void Player::ThrowSingle(uint16_t d, Board& board)
 
 	uint16_t r = (rand() % 100 + 1);
 	std::cout << "Aim Single: ";
-	if (d == OUTER) // outer bull 80% accuracy
+    if (d == 0)
+    {
+        SubtractScore(0);
+    }
+	else if (d == OUTER) // outer bull 80% accuracy
 	{
 		ThrowOuter(r);
 	}
@@ -121,8 +125,11 @@ void Player::ThrowDouble(uint16_t d, Board& board)
 	//d is the score that the player is aiming for
 	std::cout << "Aim Double ";
 	uint16_t r = (rand() % 100 + 1);
-
-	if (d == OUTER) // outer bull 80% accuracy
+    if (d == 0)
+    {
+        SubtractScore(0);
+    }
+	else if (d == OUTER) // outer bull 80% accuracy
 	{
 		ThrowOuter(r);
 	}
