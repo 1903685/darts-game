@@ -11,11 +11,11 @@ public:
 	Player(int16_t score = 501, std::string name = "");
 	~Player();
 
-	virtual void SetScore(int16_t score);
+	virtual void SetScore(uint16_t score);
 	virtual void SubtractScore(int16_t points);
 	virtual int16_t GetScore();
-	virtual bool IsOdd(uint16_t n);
-	virtual bool IsEven(uint16_t n);
+	virtual bool IsOdd(int16_t n);
+	virtual bool IsEven(int16_t n);
 	virtual bool CheckWin();
 
 	virtual std::string GetName();
@@ -25,8 +25,8 @@ public:
 	virtual void ThrowDouble(uint16_t d, Board& board);
 	virtual void ThrowTriple(uint16_t d, Board& board);
 	virtual void ThrowBullPercentage(uint16_t percentage, Board& board);
-	virtual void ThrowBull(uint16_t r);
-	virtual void ThrowOuter(uint16_t r);
+	virtual void ThrowBull();
+	virtual void ThrowOuter();
 	virtual void AimTon80(Board& board);
 	virtual void AimCheckout141(Board& board);
 	virtual void AimThree167s(Board& board);

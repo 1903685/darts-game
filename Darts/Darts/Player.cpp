@@ -18,7 +18,7 @@ Player::~Player()
 }
 
 
-void Player::SetScore(int16_t score)
+void Player::SetScore(uint16_t score)
 {
 	_score = score;
 }
@@ -33,7 +33,7 @@ int16_t Player::GetScore()
 	return _score;
 }
 
-bool Player::IsOdd(uint16_t n)
+bool Player::IsOdd(int16_t n)
 {
 	if (n % 2 != 0)
 		return true;
@@ -41,7 +41,7 @@ bool Player::IsOdd(uint16_t n)
 		return false;
 }
 
-bool Player::IsEven(uint16_t n)
+bool Player::IsEven(int16_t n)
 {
 	if (n % 2 == 0)
 		return true;
@@ -75,17 +75,17 @@ void Player::ThrowSingle(uint16_t d, Board& board)
 	//d is the score that the player is aiming for
 
 	uint16_t r = (rand() % 100 + 1);
-	std::cout << "Aim Single: ";
+	std::cout << "Aim Single: " << d << std::endl;
+
 	if (d == OUTER) // outer bull 80% accuracy
 	{
-		ThrowOuter(r);
+		ThrowOuter();
 	}
 
 	else if (d == BULL) // outer  bull 80% accuracy
 	{
-		ThrowBull(r);
+		ThrowBull();
 	}
-
 	else if (r <= 70) // 70% chance for 1 to 20 single 
 	{
 		SubtractScore(d); //subtract score
@@ -119,20 +119,19 @@ void Player::ThrowDouble(uint16_t d, Board& board)
 {
 	//subtract result of throwing for single d
 	//d is the score that the player is aiming for
-	std::cout << "Aim Double ";
+	std::cout << "Aim Double " << d << std::endl;;
 	uint16_t r = (rand() % 100 + 1);
 
 	if (d == OUTER) // outer bull 80% accuracy
 	{
-		ThrowOuter(r);
+		ThrowOuter();
 	}
 
 	else if (d == BULL) // outer  bull 80% accuracy
 	{
-		ThrowBull(r);
+		ThrowBull();
 	}
-
-	if (r <= 70) // 70% chance for double
+	else if (r <= 70) // 70% chance for double
 	{
 		_hitDouble = true;
 		SubtractScore(2 * d); //subtract double score
@@ -221,8 +220,10 @@ void Player::ThrowBullPercentage(uint16_t percentage, Board& board)
 	}
 }
 
-void Player::ThrowBull(uint16_t r)
+void Player::ThrowBull()
 {
+	int r = rand() % 100 + 1;
+
 	if (r <= 80) //80% chance
 	{
 		_hitBull = true;
@@ -241,8 +242,10 @@ void Player::ThrowBull(uint16_t r)
 		std::cout << "Scored Random: " << (rand() % 20 + 1) << " " << _score << std::endl;
 	}
 }
-void Player::ThrowOuter(uint16_t r)
+void Player::ThrowOuter()
 {
+	int r = rand() % 100 + 1;
+
 	if (r <= 80) //80% chance
 	{
 		_hitOuter = true;

@@ -25,8 +25,11 @@ int main()
 	cout << pGenericPlayer->GetScore();*/
 	
 	Game game;
-	//game.Play();
-	game.PlayAdvancedStrategy();
+	game.Play();
+	//game.PlayAdvancedStrategy();
+	/*Board *_pBoard = new Board;
+	Player *_pOne = new Player(501, "K");
+	_pOne->ThrowDouble(0, *_pBoard);*/
 
 	cin.get();
 
