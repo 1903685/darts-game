@@ -78,7 +78,7 @@ void Player::ThrowSingle(uint16_t d, Board& board)
 	std::cout << "Aim Single: ";
     if (d == 0)
     {
-        SubtractScore(0);
+        std::cout << "Miss" << std::endl;
     }
 	else if (d == OUTER) // outer bull 80% accuracy
 	{
@@ -127,7 +127,7 @@ void Player::ThrowDouble(uint16_t d, Board& board)
 	uint16_t r = (rand() % 100 + 1);
     if (d == 0)
     {
-        SubtractScore(0);
+       std::cout << "Miss" << std::endl;
     }
 	else if (d == OUTER) // outer bull 80% accuracy
 	{
@@ -172,8 +172,11 @@ void Player::ThrowTriple(uint16_t d, Board& board)
 	uint16_t r = (rand() % 100 + 1);
 
 	std::cout << "Aim Triple ";
-
-	if (r <= 70) // 70% chance for triple
+    if (d == 0)
+    {
+        std::cout << "Miss" << std::endl;
+    }
+	else if (r <= 70) // 70% chance for triple
 	{
 		_hitTriple = true;
 		SubtractScore(3 * d); //subtract triple score
