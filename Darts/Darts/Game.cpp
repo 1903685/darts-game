@@ -33,18 +33,19 @@ void Game::Play()
 
 	for (int i = 0; i < _simulateCounter; ++i)
 	{
-		uint8_t r = rand() % 2; //used to randomize strategy
-
-		switch (r) {
-		case 0:
-			PlayAdvancedStrategy();
-			break;
-		case 1:
-			PlayNineDartFinish1();
-			break;
-		}
+//		uint8_t r = rand() % 2; //used to randomize strategy
+        PlayAdvancedStrategy();
+//		switch (r) {
+//		case 0:
+//			PlayAdvancedStrategy();
+//			break;
+//		case 1:
+//			PlayNineDartFinish1();
+//			break;
+//		}
 		
 	}
+    
 	std::cin.get();
 }
 
@@ -75,36 +76,14 @@ void Game::PlayAdvancedStrategy()
 
 void Game::PlayNineDartFinish1()
 {
-	_pOne->SetScore(_newScore);
+//	_pOne->SetScore(_newScore);
 	_pTwo->SetScore(_newScore);
 
 	do
 	{
-		if (_nineDartFinish)
-		{
-			{
-				_pOne->AimTon80(*_pBoard);
-				_pTwo->AimTon80(*_pBoard);
-			}
-			{
-			_pOne->AimTon80(*_pBoard);
-			_pTwo->AimTon80(*_pBoard);
-			}
-			{
-				_pOne->AimCheckout141(*_pBoard);
-				if (_pOne->CheckWin())
-					break;
-			}
-			{
-				_pTwo->AimCheckout141(*_pBoard);
-				if (_pTwo->CheckWin())
-					break;
-			}
-			_nineDartFinish = false;
-		}
 		////////Player One Turn
 		Throw3Darts(_pOne, _pBoard);
-		////////Player Two Turn 
+		////////Player Two Turn
 		Throw3Darts(_pTwo, _pBoard);
 	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
 
@@ -124,9 +103,9 @@ void Game::Throw3Darts(Player* player, Board* board)
 
 int16_t Game::CheckWinningPosition(Player* player, Board* board)
 {
-	for (uint8_t i = 0; i < X; ++i)
+	for (uint8_t i = 1; i >= 0; --i)
 	{
-		for (uint8_t j = 0; j < Y; ++j)
+		for (uint8_t j = 20; j >= 0; --j)
 		{
 			if (player->GetScore() - board->GetAtPosition(i, j) * 2 == 0) { //check if hitting double will end the game
 				return board->GetAtPosition(i, j);
@@ -134,27 +113,34 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board)
 			else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
 				return BULL;
 			}
-		}
+            else if ( (player->GetScore() - j * 2) >= 2 ) {
+                return j;
+            }
+            else if ( ( (player->GetScore() - j) >= 2 ) && ( player->IsOdd(j) ) ) {
+                player->ThrowSingle(j, *board);
+                return 0;
+            }
+        }
 	}
 			
-	if (player->IsEven(player->GetScore())) //Check if the score is even
-	{
-		for (uint8_t i = 20; i >= 0; --i) //Choose the highest possible number to aim for and still be able to win 
-		{
-			if ((player->GetScore() - (i * 2)) >= 2) { //Check if scoring a double will leave at least the smallest possible winning score
-				return i; //A value of 0-20 will be used to throw a double
-			}
-		}
-	}
-	else {
-		for (uint8_t i = 20; i >= 0; --i) //If score is not even (odd) then throw single.
-		{
-			if ((player->GetScore() - i) >= 2 && player->IsOdd(i) ) { //Check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
-				player->ThrowSingle(i, *board); //Throw single and aim an odd number to get an even score (odd - odd = even, e.x. 7 - 3 = 4) 
-				return 0; //to end the function the value of 0 will be used to throw a double after throwing a single but it doesnt make any diffrence in simulation
-			}
-		}
-	}
+//	if (player->IsEven(player->GetScore())) //Check if the score is even
+//	{
+//		for (uint8_t i = 20; i >= 0; --i) //Choose the highest possible number to aim for and still be able to win 
+//		{
+//			if ((player->GetScore() - (i * 2)) >= 2) { //Check if scoring a double will leave at least the smallest possible winning score
+//				return i; //A value of 0-20 will be used to throw a double
+//			}
+//		}
+//	}
+//	else {
+//		for (uint8_t i = 20; i >= 0; --i) //If score is not even (odd) then throw single.
+//		{
+//			if ((player->GetScore() - i) >= 2 && player->IsOdd(i) ) { //Check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
+//				player->ThrowSingle(i, *board); //Throw single and aim an odd number to get an even score (odd - odd = even, e.x. 7 - 3 = 4) 
+//				return 0; //to end the function the value of 0 will be used to throw a double after throwing a single but it doesnt make any diffrence in simulation
+//			}
+//		}
+//	}
     return 0;
 }
 
@@ -187,7 +173,7 @@ void Game::DisplayWinner(Player* playerOne, Player* playerTwo)
 		}
 		else {
 			std::cout << "Player Two wins! He has won " << _player2WinCounter << " times!\n";
-			std::cout << "Player One has won " << _player1WinCounter << " time!\n";
+			std::cout << "Player One has won " << _player1WinCounter << " times!\n";
 		}
 	}
 	else {
