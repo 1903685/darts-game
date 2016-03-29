@@ -68,7 +68,7 @@ void Game::PlayAdvancedStrategy()
 		////////Player One Turn
 		Throw3Darts(_pOne, _pBoard);
 		////////Player Two Turn 
-		Throw3Darts(_pTwo, _pBoard);
+//		Throw3Darts(_pTwo, _pBoard);
 	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
 
 	DisplayWinner(_pOne, _pTwo);
@@ -105,7 +105,7 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board)
 {
 	for (uint8_t i = 1; i >= 0; --i)
 	{
-		for (uint8_t j = 20; j >= 0; --j)
+		for (uint8_t j = 20; j >= 0; --j) //Choose the highest possible number to aim for and still be able to win
 		{
 			if (player->GetScore() - board->GetAtPosition(i, j) * 2 == 0) { //check if hitting double will end the game
 				return board->GetAtPosition(i, j);
@@ -113,12 +113,12 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board)
 			else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
 				return BULL;
 			}
-            else if ( (player->GetScore() - j * 2) >= 2 ) {
-                return j;
+            else if ( (player->GetScore() - j * 2) >= 2 ) { //check if scoring a double will leave at least the smallest possible winning score which is 2
+                return j; //A value of 0-20 will be used to throw a double
             }
-            else if ( ( (player->GetScore() - j) >= 2 ) && ( player->IsOdd(j) ) ) {
-                player->ThrowSingle(j, *board);
-                return 0;
+            else if ( ( (player->GetScore() - j) >= 2 ) && ( player->IsOdd(j) ) ) { //check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
+                player->ThrowSingle(j, *board); //If score is not even (odd) then throw a single.
+                return 0; //returning zero will be used in ThrowDouble() but it doesn't matter in the simulation (might cause a little bit of confusion in the graphic interface)
             }
         }
 	}
