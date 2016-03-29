@@ -83,7 +83,7 @@ void Game::Throw3Darts(Player* player, Board* board)
 	uint16_t _temp = player->GetScore();
     //First Throw
     if (!player->GetBusted()) //if not busted
-    CheckWinningPosition(player, board);
+    CheckWinningPosition(player, board); //Aim for the best possible score
     CheckBusted(player, _temp); //Check if busted
     //Second Throw
     if (!player->GetBusted())
