@@ -45,7 +45,6 @@ void Game::Play()
 //		}
 		
 	}
-    
 	std::cin.get();
 }
 
@@ -68,7 +67,7 @@ void Game::PlayAdvancedStrategy()
 		////////Player One Turn
 		Throw3Darts(_pOne, _pBoard);
 		////////Player Two Turn 
-		Throw3Darts(_pTwo, _pBoard);
+//		Throw3Darts(_pTwo, _pBoard);
 	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
 
 	DisplayWinner(_pOne, _pTwo);
@@ -101,7 +100,7 @@ void Game::Throw3Darts(Player* player, Board* board)
 	CheckBusted(player, _temp);
 }
 
-int16_t Game::CheckWinningPosition(Player* player, Board* board)
+int16_t Game::CheckWinningPosition(Player* player, Board* board) //Playing Nine Dart Finish Strategy
 {
 	for (uint8_t i = 1; i >= 0; --i) //loop used to iterate through board
 	{
@@ -142,7 +141,6 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board)
 //		}
 //	}
 //	else {
-//		for (uint8_t i = 20; i >= 0; --i) //If score is not even (odd) then throw single.
 //		{
 //			if ((player->GetScore() - i) >= 2 && player->IsOdd(i) ) { //Check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
 //				player->ThrowSingle(i, *board); //Throw single and aim an odd number to get an even score (odd - odd = even, e.x. 7 - 3 = 4)
@@ -150,49 +148,50 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board)
 //			}
 //		}
 //	}
+//		for (uint8_t i = 20; i >= 0; --i) //If score is not even (odd) then throw single.
 
 void Game::CheckBusted(Player* player, uint16_t temp)
 {
-	if (player->GetScore() < 0 || player->GetScore() == 1) //Busted if score is smaller then 0 or equal to 1
-	{
-		player->SetScore(temp);
-	}
+    if (player->GetScore() < 0 || player->GetScore() == 1) //Busted if score is smaller then 0 or equal to 1
+    {
+        player->SetScore(temp);
+    }
 }
 
 void Game::DisplayWinner(Player* playerOne, Player* playerTwo)
 {
-	if (playerOne->CheckWin()) {
-		_player1WinCounter++;
-		if (_player1WinCounter == 1) {
-			std::cout << "Player One wins! He has won " << _player1WinCounter << " time!\n";
-			std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
-		}
-		else {
-			std::cout << "Player One wins! He has won " << _player1WinCounter << " times!\n";
-			std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
-		}
-	}
-	else if (playerTwo->CheckWin()) {
-		_player2WinCounter++;
-		if (_player2WinCounter == 1) {
-			std::cout << "Player Two wins! He has won " << _player2WinCounter << " time!\n";
-			std::cout << "Player One has won " << _player1WinCounter << " times!\n";
-		}
-		else {
-			std::cout << "Player Two wins! He has won " << _player2WinCounter << " times!\n";
-			std::cout << "Player One has won " << _player1WinCounter << " times!\n";
-		}
-	}
-	else {
-		std::cout << "Nobody has won!";
-	}
+    if (playerOne->CheckWin()) {
+        _player1WinCounter++;
+        if (_player1WinCounter == 1) {
+            std::cout << "Player One wins! He has won " << _player1WinCounter << " time!\n";
+            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
+        }
+        else {
+            std::cout << "Player One wins! He has won " << _player1WinCounter << " times!\n";
+            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
+        }
+    }
+    else if (playerTwo->CheckWin()) {
+        _player2WinCounter++;
+        if (_player2WinCounter == 1) {
+            std::cout << "Player Two wins! He has won " << _player2WinCounter << " time!\n";
+            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
+        }
+        else {
+            std::cout << "Player Two wins! He has won " << _player2WinCounter << " times!\n";
+            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
+        }
+    }
+    else {
+        std::cout << "Nobody has won!";
+    }
 }
 
 void Game::DisplayInstructions()
 {
-	std::cout << "Hello Fella! You are about to simulate or play exciting game of Darts 501!\n";
-	std::cout << "Choose strategy:\n";
-	std::cout << "1 - Cheek Strategy\n";
+    std::cout << "Hello Fella! You are about to simulate or play exciting game of Darts 501!\n";
+    std::cout << "Choose strategy:\n";
+    std::cout << "1 - Cheek Strategy\n";
 }
 
 ////When score is 50

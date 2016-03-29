@@ -33,21 +33,6 @@ public:
 
 	virtual void NineDartFinish1(Board& board);
 	virtual void NineDartFinish2(Board& board);
-
-	//virtual void AdvancedStrategy(Board& board);
-
-private:
-	//uint16_t _score;
-	//uint16_t d = 0;           //variable to hold player's aim
-	//bool Fail = false;        //variable for method allowing only numeric input
-	//std::string _name;
-	/*int16_t _score;
-	std::string _name = "";*/
-	/*bool HitDouble = false;
-	bool HitTriple = false;
-	bool HitOuter = false;
-	bool HitBull = false;*/
-
 };
 
 

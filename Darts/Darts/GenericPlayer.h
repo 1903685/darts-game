@@ -33,15 +33,10 @@ public:
 
 	virtual void NineDartFinish1(Board& board) = 0;
 	virtual void NineDartFinish2(Board& board) = 0;
-	//virtual void AdvancedStrategy( Board& board) = 0;
 
 protected:
 	int16_t _score = 501;
 	std::string _name = "";
-	bool _hitDouble = false;
-	bool _hitTriple = false;
-	bool _hitOuter = false;
-	bool _hitBull = false;
 };
 
 #endif

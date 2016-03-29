@@ -103,13 +103,11 @@ void Player::ThrowSingle(uint16_t d, Board& board)
 	} 
 	else if (r > 90 && r <= 95) //5% chance for scoring double
 	{
-		_hitDouble = true;
 		SubtractScore(2 * d); //subtract double score
 		std::cout << "Scored Double: " << 2 * d << " " << _score << std::endl;
 	}
 	else //5% chance for scoring triple
 	{
-		_hitTriple = true;
 		SubtractScore(3 * d); //subtract triple score
 		std::cout << "Scored Triple: " << 3 * d << " " << _score << std::endl;
 	}
@@ -133,19 +131,16 @@ void Player::ThrowDouble(uint16_t d, Board& board)
 	}
 	else if (r <= 70) // 70% chance for double
 	{
-		_hitDouble = true;
 		SubtractScore(2 * d); //subtract double score
 		std::cout << "Scored Double: " << 2 * d << " " << _score << std::endl;
 	}
 	else if (r > 70 && r <= 80) //10% chance for scoring double left
 	{
-		_hitDouble = true;
 		SubtractScore(2 * (board.GetAtPosition(0, d) )); //subtract double score from the left
 		std::cout << "Scored Double:  " << 2 * (board.GetAtPosition(0, d)) << " " << _score << std::endl;
 	}
 	else if (r > 80 && r <= 90) //10% chance for scoring double right
 	{
-		_hitDouble = true;
 		SubtractScore(2 * (board.GetAtPosition(1, d)) ); //subtract double score from the right
 		std::cout << "Scored Double:  " << 2 * (board.GetAtPosition(1, d)) << " " << _score << std::endl;
 	}
@@ -167,20 +162,17 @@ void Player::ThrowTriple(uint16_t d, Board& board)
 
 	if (r <= 70) // 70% chance for triple
 	{
-		_hitTriple = true;
 		SubtractScore(3 * d); //subtract triple score
 		std::cout << "Scored Triple: " << 3 * d << " " << _score << std::endl;
 		//*board.GetScore()) - 3 * d;
 	}
 	else if (r > 70 && r <= 80) //10% chance for scoring triple left
 	{
-		_hitTriple = true;
 		SubtractScore(3 * (board.GetAtPosition(0, d)) ); //subtract triple score from the left
 		std::cout << "Scored Triple Left: " << 3 * (board.GetAtPosition(0, d)) << " " << _score << std::endl;
 	}
 	else if (r > 80 && r <= 90) //10% chance for scoring triple right
 	{
-		_hitTriple = true;
 		SubtractScore(3 * (board.GetAtPosition(1, d)) ); //subtract triple score from the right
 		std::cout << "Scored Triple Right: " << 3 * (board.GetAtPosition(1, d)) << " " << _score << std::endl;
 	}
@@ -203,13 +195,11 @@ void Player::ThrowBullPercentage(uint16_t percentage, Board& board)
 	std::cout << "Aim Bull ";
 	if (r <= percentage) //happens with custom percentage chance
 	{
-		_hitBull = true;
 		SubtractScore(BULL);
 		std::cout << "Scored Bull: " << BULL << " " << _score << std::endl;
 	}
 	else if (r > percentage && r < percentage + 20) //happens with 20% chance
 	{
-		_hitOuter = true;
 		SubtractScore(OUTER);
 		std::cout << "Scored Outer: " << OUTER << " " << _score << std::endl;
 	}
@@ -226,13 +216,11 @@ void Player::ThrowBull()
 
 	if (r <= 80) //80% chance
 	{
-		_hitBull = true;
 		SubtractScore(BULL); //subtract red inner bull from score
 		std::cout << "Scored Bull: " << BULL << " " << _score << std::endl;
 	}
 	else if (r > 80 && r <= 90) //10% chance
 	{
-		_hitOuter = true;
 		SubtractScore(OUTER); //subtract outer bull from score
 		std::cout << "Scored Outer: " << OUTER << " " << _score << std::endl;
 	}
@@ -248,13 +236,11 @@ void Player::ThrowOuter()
 
 	if (r <= 80) //80% chance
 	{
-		_hitOuter = true;
 		SubtractScore(OUTER); //subtract outer bull from score
 		std::cout << "Scored Outer: " << OUTER << " " << _score << std::endl;
 	}
 	else if (r > 80 && r <= 90) //10% chance
 	{
-		_hitBull = true;
 		SubtractScore(BULL); //subtract red inner bull from score
 		std::cout << "Scored Bull: " << BULL << " " << _score << std::endl;
 	}
