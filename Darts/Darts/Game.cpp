@@ -67,7 +67,7 @@ void Game::PlayAdvancedStrategy()
 		////////Player One Turn
 		Throw3Darts(_pOne, _pBoard);
 		////////Player Two Turn 
-//		Throw3Darts(_pTwo, _pBoard);
+		Throw3Darts(_pTwo, _pBoard);
 	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
 
 	DisplayWinner(_pOne, _pTwo);
@@ -108,7 +108,7 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board) //Playing Nine 
 		{
             
 			if (player->GetScore() - board->GetAtPosition(i, j) * 2 == 0) { //check if hitting double will end the game
-                player->ThrowDouble(board->GetAtPosition(i, j), *board);
+                player->ThrowDouble(board->GetAtPosition(i, j), board);
                 return 0;
 			}
 			else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
@@ -116,15 +116,15 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board) //Playing Nine 
                 return 0;
 			}
             else if ( (player->GetScore() - j * 3) >= 2 ) { //check if scoring a triple will leave at least the smallest possible winning score which is 2
-                player->ThrowTriple(j, *board);
+                player->ThrowTriple(j, board);
                 return 0;
             }
             else if ( (player->GetScore() - j * 2) >= 2 ) { //check if scoring a double will leave at least the smallest possible winning score which is 2
-                player->ThrowDouble(j, *board); //A value of 20-0 will be used to throw a double
+                player->ThrowDouble(j, board); //A value of 20-0 will be used to throw a double
                 return 0;
             }
             else if ( ( (player->GetScore() - j) >= 2 ) && ( player->IsOdd(j) ) ) { //check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
-                player->ThrowSingle(j, *board); //If score is not even (odd) then throw a single.
+                player->ThrowSingle(j, board); //If score is not even (odd) then throw a single.
                 return 0;
             }
         }

@@ -21,18 +21,18 @@ public:
 	virtual std::string GetName();
 	virtual void SetName(std::string name);
 
-	virtual void ThrowSingle(uint16_t d, Board& board);
-	virtual void ThrowDouble(uint16_t d, Board& board);
-	virtual void ThrowTriple(uint16_t d, Board& board);
-	virtual void ThrowBullPercentage(uint16_t percentage, Board& board);
+	virtual void ThrowSingle(uint16_t d, Board* board);
+	virtual void ThrowDouble(uint16_t d, Board* board);
+	virtual void ThrowTriple(uint16_t d, Board* board);
+	virtual void ThrowBullPercentage(uint16_t percentage, Board* board);
 	virtual void ThrowBull();
 	virtual void ThrowOuter();
-	virtual void AimTon80(Board& board);
-	virtual void AimCheckout141(Board& board);
-	virtual void AimThree167s(Board& board);
+	virtual void AimTon80(Board* board);
+	virtual void AimCheckout141(Board* board);
+	virtual void AimThree167s(Board* board);
 
-	virtual void NineDartFinish1(Board& board);
-	virtual void NineDartFinish2(Board& board);
+	virtual void NineDartFinish1(Board* board);
+	virtual void NineDartFinish2(Board* board);
 };
 
 
