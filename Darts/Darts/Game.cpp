@@ -154,7 +154,8 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board)
 				return 0; //to end the function the value of 0 will be used to throw a double after throwing a single but it doesnt make any diffrence in simulation
 			}
 		}
-	}	
+	}
+    return 0;
 }
 
 void Game::CheckBusted(Player* player, uint16_t temp)
