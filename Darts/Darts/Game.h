@@ -15,7 +15,6 @@ public:
 	~Game();
 
 	void Play(); //Plays the game of darts
-	void PlayAdvancedStrategy();
 
 private:
 	Board *_pBoard = new Board;
@@ -25,6 +24,7 @@ private:
 	uint8_t _choice = 0;
 	bool _fail = false;
 	bool _nineDartFinish = true;
+    bool _busted = false;
 
 	uint16_t _newScore = 501;
 	int16_t _temp = 0;
@@ -37,8 +37,7 @@ private:
 	void DisplayWinner(Player* playerOne, Player* playerTwo);
 	void Throw3Darts(Player* player, Board* board);
 
-	void PlayNineDartFinish1();
-	//void NineDartFinish2(Board& board);
+	void PlayNineDartFinish();
 
 	void DisplayInstructions();
 };

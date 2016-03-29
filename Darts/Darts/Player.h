@@ -17,6 +17,9 @@ public:
 	virtual bool IsOdd(int16_t n);
 	virtual bool IsEven(int16_t n);
 	virtual bool CheckWin();
+    virtual void SetBustedToFalse();
+    virtual void SetBustedToTrue();
+    virtual bool GetBusted();
 
 	virtual std::string GetName();
 	virtual void SetName(std::string name);

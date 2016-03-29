@@ -34,13 +34,13 @@ void Game::Play()
 	for (int i = 0; i < _simulateCounter; ++i)
 	{
 //		uint8_t r = rand() % 2; //used to randomize strategy
-        PlayAdvancedStrategy();
+//        PlayAdvancedStrategy();
 //		switch (r) {
 //		case 0:
 //			PlayAdvancedStrategy();
 //			break;
 //		case 1:
-//			PlayNineDartFinish1();
+			PlayNineDartFinish();
 //			break;
 //		}
 		
@@ -57,7 +57,7 @@ void Game::Play()
 //	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 //} while (_fail);
 
-void Game::PlayAdvancedStrategy()
+void Game::PlayNineDartFinish()
 {
 	_pOne->SetScore(_newScore);
 	_pTwo->SetScore(_newScore);
@@ -65,24 +65,13 @@ void Game::PlayAdvancedStrategy()
 	do
 	{
 		////////Player One Turn
+        std::cout << "Player 1 Score: " << _pOne->GetScore() << std::endl;
 		Throw3Darts(_pOne, _pBoard);
-		////////Player Two Turn 
-		Throw3Darts(_pTwo, _pBoard);
-	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
-
-	DisplayWinner(_pOne, _pTwo);
-}
-
-void Game::PlayNineDartFinish1()
-{
-	_pOne->SetScore(_newScore);
-	_pTwo->SetScore(_newScore);
-
-	do
-	{
-		////////Player One Turn
-		Throw3Darts(_pOne, _pBoard);
+        if (_pOne->GetScore() == 0) {
+            break;
+        }
 		////////Player Two Turn
+        std::cout << "Player 2 Score: " << _pTwo->GetScore() << std::endl;
 		Throw3Darts(_pTwo, _pBoard);
 	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
 
@@ -92,44 +81,60 @@ void Game::PlayNineDartFinish1()
 void Game::Throw3Darts(Player* player, Board* board) 
 {
 	uint16_t _temp = player->GetScore();
+    //First Throw
+    if (!player->GetBusted()) //if not busted
+    CheckWinningPosition(player, board);
+    CheckBusted(player, _temp); //Check if busted
+    //Second Throw
+    if (!player->GetBusted())
 	CheckWinningPosition(player, board);
+    CheckBusted(player, _temp);
+    //Third Throw
+    if (!player->GetBusted())
+    CheckWinningPosition(player, board);
 	CheckBusted(player, _temp);
-	CheckWinningPosition(player, board);
-	CheckBusted(player, _temp);
-	CheckWinningPosition(player, board);
-	CheckBusted(player, _temp);
+    //End turn
+//    _busted = false;
+    player->SetBustedToFalse();
+    std::cout << std::endl;
 }
 
 int16_t Game::CheckWinningPosition(Player* player, Board* board) //Playing Nine Dart Finish Strategy
 {
-	for (uint8_t i = 1; i >= 0; --i) //loop used to iterate through board
-	{
-		for (uint8_t j = 20; j >= 0; --j) //Choose the highest possible number to aim for and still be able to win
-		{
-            
-			if (player->GetScore() - board->GetAtPosition(i, j) * 2 == 0) { //check if hitting double will end the game
-                player->ThrowDouble(board->GetAtPosition(i, j), board);
-                return 0;
-			}
-			else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
-                player->ThrowBull();
-                return 0;
-			}
-            else if ( (player->GetScore() - j * 3) >= 2 ) { //check if scoring a triple will leave at least the smallest possible winning score which is 2
-                player->ThrowTriple(j, board);
-                return 0;
-            }
-            else if ( (player->GetScore() - j * 2) >= 2 ) { //check if scoring a double will leave at least the smallest possible winning score which is 2
-                player->ThrowDouble(j, board); //A value of 20-0 will be used to throw a double
-                return 0;
-            }
-            else if ( ( (player->GetScore() - j) >= 2 ) && ( player->IsOdd(j) ) ) { //check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
-                player->ThrowSingle(j, board); //If score is not even (odd) then throw a single.
-                return 0;
+    if (player->GetScore() == 0) {
+        return 0;
+    }
+    else
+    {
+        for (uint8_t i = 1; i >= 0; --i) //loop used to iterate through board
+        {
+            for (uint8_t j = 20; j >= 0; --j) //Choose the highest possible number to aim for and still be able to win
+            {
+                
+                if ( (player->GetScore() - (board->GetAtPosition(i, j) * 2)) == 0 ) { //check if hitting double will end the game
+                    player->ThrowDouble(board->GetAtPosition(i, j), board);
+                    return 0;
+                }
+                else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
+                    player->ThrowBull();
+                    return 0;
+                }
+                else if ( ( (player->GetScore() - (j * 3)) >= 2 ) ) { //check if scoring a triple will leave at least the smallest possible winning score which is 2
+                    player->ThrowTriple(j, board);
+                    return 0;
+                }
+                else if ( (player->GetScore() - (j * 2)) >= 2 ) { //check if scoring a double will leave at least the smallest possible winning score which is 2
+                    player->ThrowDouble(j, board); //A value of 20-0 will be used to throw a double
+                    return 0;
+                }
+                else if ( ( (player->GetScore() - j) >= 2 ) && ( player->IsOdd(j) ) ) { //check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
+                    player->ThrowSingle(j, board); //If score is not even (odd) then throw a single.
+                    return 0;
+                }
             }
         }
-	}
-    return 0;
+        return 0;
+    }
 }
 //	if (player->IsEven(player->GetScore())) //Check if the score is even
 //	{
@@ -152,9 +157,11 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board) //Playing Nine 
 
 void Game::CheckBusted(Player* player, uint16_t temp)
 {
-    if (player->GetScore() < 0 || player->GetScore() == 1) //Busted if score is smaller then 0 or equal to 1
+    if (player->GetScore() < 0 || player->GetScore() == 1 || player->GetBusted()) //Busted if score is smaller then 0 or equal to 1 or not finished on double
     {
         player->SetScore(temp);
+        player->SetBustedToTrue();
+//        _busted = true;
     }
 }
 

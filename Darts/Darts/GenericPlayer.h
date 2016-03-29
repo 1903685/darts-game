@@ -17,6 +17,9 @@ public:
 	virtual bool IsOdd(int16_t n) = 0;
 	virtual bool IsEven(int16_t n) = 0;
 	virtual bool CheckWin() = 0;
+    virtual void SetBustedToFalse() = 0;
+    virtual void SetBustedToTrue() = 0;
+    virtual bool GetBusted() = 0;
 
 	virtual std::string GetName() = 0;
 	virtual void SetName(std::string name) = 0;
@@ -37,6 +40,7 @@ public:
 protected:
 	int16_t _score = 501;
 	std::string _name = "";
+    bool _busted;
 };
 
 #endif
