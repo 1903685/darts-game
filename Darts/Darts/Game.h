@@ -43,5 +43,4 @@ private:
 	void DisplayInstructions();
 };
 
-#endif GAME_H
-
+#endif
