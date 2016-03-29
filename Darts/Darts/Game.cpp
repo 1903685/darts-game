@@ -68,7 +68,7 @@ void Game::PlayAdvancedStrategy()
 		////////Player One Turn
 		Throw3Darts(_pOne, _pBoard);
 		////////Player Two Turn 
-//		Throw3Darts(_pTwo, _pBoard);
+		Throw3Darts(_pTwo, _pBoard);
 	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
 
 	DisplayWinner(_pOne, _pTwo);
@@ -76,7 +76,7 @@ void Game::PlayAdvancedStrategy()
 
 void Game::PlayNineDartFinish1()
 {
-//	_pOne->SetScore(_newScore);
+	_pOne->SetScore(_newScore);
 	_pTwo->SetScore(_newScore);
 
 	do
@@ -93,39 +93,48 @@ void Game::PlayNineDartFinish1()
 void Game::Throw3Darts(Player* player, Board* board) 
 {
 	uint16_t _temp = player->GetScore();
-	player->ThrowDouble(CheckWinningPosition(player, board), *board);
+	CheckWinningPosition(player, board);
 	CheckBusted(player, _temp);
-	player->ThrowDouble(CheckWinningPosition(player, board), *board);
+	CheckWinningPosition(player, board);
 	CheckBusted(player, _temp);
-	player->ThrowDouble(CheckWinningPosition(player, board), *board);
+	CheckWinningPosition(player, board);
 	CheckBusted(player, _temp);
 }
 
 int16_t Game::CheckWinningPosition(Player* player, Board* board)
 {
-	for (uint8_t i = 1; i >= 0; --i)
+	for (uint8_t i = 1; i >= 0; --i) //loop used to iterate through board
 	{
 		for (uint8_t j = 20; j >= 0; --j) //Choose the highest possible number to aim for and still be able to win
 		{
+            
 			if (player->GetScore() - board->GetAtPosition(i, j) * 2 == 0) { //check if hitting double will end the game
-				return board->GetAtPosition(i, j);
+                player->ThrowDouble(board->GetAtPosition(i, j), *board);
+                return 0;
 			}
 			else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
-				return BULL;
+                player->ThrowBull();
+                return 0;
 			}
+            else if ( (player->GetScore() - j * 3) >= 2 ) { //check if scoring a triple will leave at least the smallest possible winning score which is 2
+                player->ThrowTriple(j, *board);
+                return 0;
+            }
             else if ( (player->GetScore() - j * 2) >= 2 ) { //check if scoring a double will leave at least the smallest possible winning score which is 2
-                return j; //A value of 0-20 will be used to throw a double
+                player->ThrowDouble(j, *board); //A value of 20-0 will be used to throw a double
+                return 0;
             }
             else if ( ( (player->GetScore() - j) >= 2 ) && ( player->IsOdd(j) ) ) { //check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
                 player->ThrowSingle(j, *board); //If score is not even (odd) then throw a single.
-                return 0; //returning zero will be used in ThrowDouble() but it doesn't matter in the simulation (might cause a little bit of confusion in the graphic interface)
+                return 0;
             }
         }
 	}
-			
+    return 0;
+}
 //	if (player->IsEven(player->GetScore())) //Check if the score is even
 //	{
-//		for (uint8_t i = 20; i >= 0; --i) //Choose the highest possible number to aim for and still be able to win 
+//		for (uint8_t i = 20; i >= 0; --i) //Choose the highest possible number to aim for and still be able to win
 //		{
 //			if ((player->GetScore() - (i * 2)) >= 2) { //Check if scoring a double will leave at least the smallest possible winning score
 //				return i; //A value of 0-20 will be used to throw a double
@@ -136,13 +145,11 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board)
 //		for (uint8_t i = 20; i >= 0; --i) //If score is not even (odd) then throw single.
 //		{
 //			if ((player->GetScore() - i) >= 2 && player->IsOdd(i) ) { //Check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
-//				player->ThrowSingle(i, *board); //Throw single and aim an odd number to get an even score (odd - odd = even, e.x. 7 - 3 = 4) 
+//				player->ThrowSingle(i, *board); //Throw single and aim an odd number to get an even score (odd - odd = even, e.x. 7 - 3 = 4)
 //				return 0; //to end the function the value of 0 will be used to throw a double after throwing a single but it doesnt make any diffrence in simulation
 //			}
 //		}
 //	}
-    return 0;
-}
 
 void Game::CheckBusted(Player* player, uint16_t temp)
 {
