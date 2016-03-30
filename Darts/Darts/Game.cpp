@@ -174,14 +174,13 @@ void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
 
 GenericPlayer* Game::WhoFirst()
 {
-    uint16_t percentage = rand()%100 + 1; //random number between 1-100
     do {
 
         for(int i = 0; i < _players.size(); ++i) {
             auto p = _players[i];
             std::cout << p->GetName() << " aims for bull!" << std::endl;
 
-            if(!p->ThrowBullPercentage(percentage)) {
+            if(!p->ThrowBullPercentage(50)) {
                 std::cout << p->GetName() << " missed bull!" << std::endl;
                 continue;
             }

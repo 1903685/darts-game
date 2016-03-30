@@ -68,6 +68,14 @@ void Player::SetName(std::string name)
 	_name = name;
 }
 
+void Player::IncrementWinCounter() {
+    _winCounter++;
+}
+
+uint16_t Player::GetWinCounter() {
+    return _winCounter;
+}
+
 void Player::ThrowSingle(uint16_t d, Board* board)
 {
 	//subtract result of throwing for single d
@@ -203,7 +211,7 @@ bool Player::ThrowBullPercentage(uint16_t percentage)
 {
 	//  Throw for the bull with given accuracy
 	uint16_t r = (rand() % 100 + 1);
-    return r <= percentage;
+    return (r <= percentage);
 }
 
 void Player::ThrowBull()
@@ -280,13 +288,4 @@ void Player::NineDartFinish2(Board* board)
 	AimTon80(board);
 	AimTon80(board);
 	AimThree167s(board);
-}
-
-
-void Player::IncrementWinCounter() {
-    _winCounter++;
-}
-
-uint16_t Player::GetWinCounter() {
-    return _winCounter;
 }
