@@ -31,15 +31,6 @@ public:
 	virtual bool ThrowBullPercentage(uint16_t percentage);
 	virtual void ThrowBull();
 	virtual void ThrowOuter();
-	virtual void AimTon80(Board* board);
-	virtual void AimCheckout141(Board* board);
-	virtual void AimThree167s(Board* board);
-
-	virtual void NineDartFinish1(Board* board);
-	virtual void NineDartFinish2(Board* board);
-    
-    
-    
 private:
     int16_t _score;
     uint16_t _winCounter;

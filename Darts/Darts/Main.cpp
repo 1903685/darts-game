@@ -15,15 +15,6 @@ int main()
 {
 	srand(static_cast<unsigned int>(time(0)));
 	
-	/*Matrix my_matrix(4, Column(5));
-	my_matrix = { { 12 }, { 12 } };
-	cout << my_matrix[1][0];*/
-	
-	/*GenericPlayer *pGenericPlayer = new Player(501, "Geoarge");
-
-	pGenericPlayer->NineDartFinish1(board);
-	cout << pGenericPlayer->GetScore();*/
-	
 	Game game;
     game.Play({
         new Player(501, "player1"),

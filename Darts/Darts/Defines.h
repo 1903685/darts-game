@@ -15,3 +15,8 @@ const uint16_t Y = 21;
 //typedef std::vector< std::vector<int> >::iterator row_iter;
 
 #endif
+
+
+/*Matrix my_matrix(4, Column(5));
+	my_matrix = { { 12 }, { 12 } };
+	cout << my_matrix[1][0];*/

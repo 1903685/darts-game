@@ -17,30 +17,28 @@ public:
 
     void Play(const std::vector<GenericPlayer*>& players); //Plays the game of darts
 private:
+    std::size_t _currentPlayer;
+    std::vector<GenericPlayer*> _players;
     Board *_pBoard = new Board;
     GenericPlayer* GetCurrentPlayer();
     GenericPlayer* NextPlayer();
-//	uint8_t _choice = 0;
-//	bool _fail = false;
-	uint16_t _newScore = 501;
-	int16_t _temp = 0;
-	int16_t _simulateCounter = 0;
     
-    void DisplayEndGame(std::size_t winnerIndex);
 
 	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
-	void CheckBusted(GenericPlayer* player, uint16_t temp);
-	void DisplayWinner(GenericPlayer* playerOne, GenericPlayer* playerTwo);
-	void Throw3Darts(GenericPlayer* player, Board* board);
     GenericPlayer* WhoFirst();
-
-	void PlayNineDartFinish();
-
+    void PlayNineDartFinish();
+    void Throw3Darts(GenericPlayer* player, Board* board);
+    void CheckBusted(GenericPlayer* player, uint16_t temp);
+    void DisplayEndGame(std::size_t winnerIndex);
+    
 	void DisplayInstructions();
     
-    std::size_t _currentPlayer;
-    std::vector<GenericPlayer*> _players;
+    uint16_t _newScore = 501;
+    int16_t _temp = 0;
+    int16_t _simulateCounter = 0;
     
 };
 
+//	uint8_t _choice = 0;
+//	bool _fail = false;
 #endif

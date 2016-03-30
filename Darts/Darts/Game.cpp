@@ -48,12 +48,6 @@ void Game::Play(const std::vector<GenericPlayer*>& players)
 
 void Game::PlayNineDartFinish()
 {
-	/*_pOne->SetScore(_newScore);
-	_pTwo->SetScore(_newScore);
-
-    _pOne = WhoFirst(_pOne, _pTwo);
-    _pTwo = Oponent(_pOne, _pTwo);
-    */
     for(auto p : _players) {
         p->SetScore(_newScore);
     }
@@ -62,7 +56,7 @@ void Game::PlayNineDartFinish()
     while(true) {
         
         if(player == nullptr) { break; }
-        std::cout << player->GetName() << " turn" << std::endl;
+        std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
         Throw3Darts(player, _pBoard);
         
         if(player->CheckWin()) break;
@@ -70,27 +64,6 @@ void Game::PlayNineDartFinish()
     }
     
     DisplayEndGame(_currentPlayer);
-    
-	/*do
-	{
-        
-        
-        
-		////////Player One Turn
-        std::cout << _pOne->GetName() << " Score: " << _pOne->GetScore() << std::endl;
-		Throw3Darts(_pOne, _pBoard);
-        if (_pOne->GetScore() == 0) {
-            break;
-        }
-		////////Player Two Turn
-        std::cout << _pTwo->GetName() << " Score: " << _pTwo->GetScore() << std::endl;
-		Throw3Darts(_pTwo, _pBoard);
-	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
-    
-    _pOne->SetBull(false);
-    _pTwo->SetBull(false);
-    
-	DisplayWinner(_pOne, _pTwo);*/
 }
 
 GenericPlayer* Game::GetCurrentPlayer() {
@@ -186,7 +159,7 @@ GenericPlayer* Game::WhoFirst()
             }
             
             _currentPlayer = i;
-            std::cout << p->GetName() << " hit bull!" << std::endl;
+            std::cout << p->GetName() << " hit bull!" << std::endl << std::endl;
             return p;
         }
     } while(true);
@@ -208,103 +181,3 @@ void Game::DisplayInstructions()
     std::cout << "Choose strategy:\n";
     std::cout << "1 - Cheek Strategy\n";
 }
-
-
-
-
-//void Game::DisplayWinner(GenericPlayer* playerOne, GenericPlayer* playerTwo)
-//{
-//    if (playerOne->CheckWin()) {
-//        _player1WinCounter++;
-//        if (_player1WinCounter == 1) {
-//            std::cout << "Player One wins! He has won " << _player1WinCounter << " time!\n";
-//            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
-//        }
-//        else {
-//            std::cout << "Player One wins! He has won " << _player1WinCounter << " times!\n";
-//            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
-//        }
-//    }
-//    else if (playerTwo->CheckWin()) {
-//        _player2WinCounter++;
-//        if (_player2WinCounter == 1) {
-//            std::cout << "Player Two wins! He has won " << _player2WinCounter << " time!\n";
-//            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
-//        }
-//        else {
-//            std::cout << "Player Two wins! He has won " << _player2WinCounter << " times!\n";
-//            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
-//        }
-//    }
-//    else {
-//        std::cout << "Nobody has won!";
-//    }
-//}
-
-////When score is 50
-//if (_pOne->GetScore() == 50)  //Player One 1st Shot
-//{
-//	_pOne->ThrowBull(90, *_pBoard);
-//	if (CheckWin(_pOne))
-//	{
-//		PlayerOneWins = true;
-//		break;
-//	}
-//}
-
-//if (player->IsEven(player->GetScore()))
-//{
-//	for (int i = 20; i >= 0; --i)
-//	{
-//		if ((player->GetScore() - (i * 2)) >= 2) {
-//			//player->ThrowSingle(i, *board);
-//			return i;
-//		}
-//	}
-//}
-//else {
-//	for (int i = 20; i >= 0; --i)
-//	{
-//		if ((player->GetScore() - i) >= 2) {
-//			player->ThrowSingle(i, *board);
-//			return 0;
-//		}
-//	}
-//}
-//if (player->IsEven(player->GetScore()))
-//{
-//	for (int i = 20; i >= 0; --i)
-//	{
-//		if ((player->GetScore() - (i * 2)) >= 2) {
-//			//player->ThrowSingle(i, *board);
-//			return i;
-//		}
-//		else if ((player->GetScore() - i) >= 2) {
-//			player->ThrowSingle(i, *board);
-//			return 0;
-//		}
-//	}
-//}
-//else if (player->IsEven(player->GetScore() - board->GetAtPosition(i, j)) >= 2) { //otherwise aim to not bust, to get even score and still be able to win (the smallest score like this is 2)
-//	player->ThrowSingle(board->GetAtPosition(i, j), *board);
-//	return 0;
-//if score is even 
-//else if (player->IsEven(player->GetScore())) {
-
-//}
-
-//aim for even
-
-//if score is odd
-//aim for odd
-//}
-/*else if (player->IsEven(player->GetScore()))
-{
-if ((player->GetScore() - (j * 2)) >= 2) {
-return j;
-}
-else if ((player->GetScore() - j) >= 2) {
-player->ThrowSingle(j, *board);
-
-}
-}*/
