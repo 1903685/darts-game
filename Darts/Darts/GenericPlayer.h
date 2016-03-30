@@ -4,6 +4,7 @@
 
 #include <string>
 class Board;
+class Player;
 
 class GenericPlayer
 {
@@ -20,6 +21,10 @@ public:
     virtual void SetBustedToFalse() = 0;
     virtual void SetBustedToTrue() = 0;
     virtual bool GetBusted() = 0;
+    virtual void SetBull(bool value) = 0;
+    virtual bool GetBull() = 0;
+    
+    virtual Player WhoFirst(Player* playerOne, Player* playerTwo, Board *board) = 0;
 
 	virtual std::string GetName() = 0;
 	virtual void SetName(std::string name) = 0;
@@ -40,7 +45,8 @@ public:
 protected:
 	int16_t _score = 501;
 	std::string _name = "";
-    bool _busted;
+    bool _busted = false;
+    bool _hitBull = false;
 };
 
 #endif

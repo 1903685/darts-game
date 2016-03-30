@@ -74,6 +74,16 @@ bool Player::GetBusted()
     return _busted;
 }
 
+void Player::SetBull(bool value)
+{
+    _hitBull = value;
+}
+
+bool Player::GetBull()
+{
+    return _hitBull;
+}
+
 std::string Player::GetName()
 {
 	return _name;
@@ -82,6 +92,28 @@ std::string Player::GetName()
 void Player::SetName(std::string name)
 {
 	_name = name;
+}
+
+Player Player::WhoFirst(Player* playerOne, Player* playerTwo, Board *board)
+{
+    uint8_t percentage = rand()%100 + 1; //random number between 1-100
+    
+    do {
+        playerOne->ThrowBullPercentage(percentage,  board);
+        if (playerOne->GetBull()) {
+            std::cout << "Player One Scored Bull!" << std::endl;
+            return *playerOne;
+        } else {
+            std::cout << "Player One Missed Bull!" << std::endl;
+        }
+        playerTwo->ThrowBullPercentage(percentage, board);
+        if (playerTwo->GetBull()) {
+            std::cout << "Player Two Score Bull!" << std::endl;
+            return *playerTwo;
+        } else {
+            std::cout << "Player Two Missed Bull!" << std::endl;
+        }
+    } while ( true );
 }
 
 void Player::ThrowSingle(uint16_t d, Board* board)
@@ -220,21 +252,12 @@ void Player::ThrowBullPercentage(uint16_t percentage, Board* board)
 	//  Throw for the bull with given accuracy
 	int r = (rand() % 100 + 1);
 	std::cout << "Aim Bull ";
-	if (r <= percentage) //happens with custom percentage chance
-	{
-		SubtractScore(BULL);
-		std::cout << "Scored Bull " << BULL << " Score: " << _score << std::endl;
+	if (r <= percentage) { //happens with custom percentage chance
+        SetBull(true);
 	}
-	else if (r > percentage && r < percentage + 20) //happens with 20% chance
-	{
-		SubtractScore(OUTER);
-		std::cout << "Scored Outer " << OUTER << " Score: " << _score << std::endl;
-	}
-	else //happens with remaining percentage
-	{
-		SubtractScore(rand() % 20 + 1);
-		std::cout << "Scored Random " << rand() % 20 + 1 << " Score: " << _score << std::endl;
-	}
+    else { //happens with remaining percentage
+        std::cout << "Missed Bull!" << std::endl;
+    }
 }
 
 void Player::ThrowBull()

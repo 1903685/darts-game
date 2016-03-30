@@ -59,6 +59,7 @@ void Game::Play()
 
 void Game::PlayNineDartFinish()
 {
+    100
 	_pOne->SetScore(_newScore);
 	_pTwo->SetScore(_newScore);
 

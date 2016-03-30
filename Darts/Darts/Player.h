@@ -4,6 +4,7 @@
 
 #include "GenericPlayer.h"
 class Board;
+class Player;
 
 class Player : public GenericPlayer
 {
@@ -20,6 +21,10 @@ public:
     virtual void SetBustedToFalse();
     virtual void SetBustedToTrue();
     virtual bool GetBusted();
+    virtual void SetBull(bool value);
+    virtual bool GetBull();
+    
+    virtual Player WhoFirst(Player* playerOne, Player* playerTwo, Board *board);
 
 	virtual std::string GetName();
 	virtual void SetName(std::string name);
