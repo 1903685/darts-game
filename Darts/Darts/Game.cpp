@@ -25,16 +25,7 @@ void Game::Play(const std::vector<GenericPlayer*>& players)
     
     _players = players;
     _currentPlayer = 0;
-	/*std::cout << _pOne->GetName() << std::endl;;
 
-	_pOne->NineDartFinish1(*_pBoard);
-	std::cout << std::endl;
-	_pTwo->NineDartFinish2(*_pBoard);*/
-	
-	//std::cout << "Hello Fella! You are about to simulate exciting game of Darts 501!\n";
-	//std::cout << "How many times you want to simulate? ";
-	//std::cout << "Choose strategy:\n";
-	//std::cout << "1 - Cheek Strategy\n";
 	std::cout << "How many times you want to play? ";
 	std::cin >> _simulateCounter;
 	std::cout << std::endl;
@@ -67,15 +58,15 @@ void Game::PlayNineDartFinish()
         p->SetScore(_newScore);
     }
     
-    bool gameOver = false;
-    
-    while(!gameOver) {
-        auto player = NextPlayer();
-        if(player == nullptr) { break; }
+    auto player = WhoFirst();
+    while(true) {
         
+        if(player == nullptr) { break; }
+        std::cout << player->GetName() << " turn" << std::endl;
         Throw3Darts(player, _pBoard);
         
-        gameOver = player->CheckWin();
+        if(player->CheckWin()) break;
+        player = NextPlayer();
     }
     
     for(auto p : _players) {
@@ -122,7 +113,6 @@ void Game::Throw3Darts(GenericPlayer* player, Board* board)
     CheckWinningPosition(player, board);
 	CheckBusted(player, _temp);
     //End turn
-//    _busted = false;
     player->SetBustedToFalse();
     std::cout << std::endl;
 }
@@ -164,24 +154,6 @@ int16_t Game::CheckWinningPosition(GenericPlayer* player, Board* board) //Playin
         return 0;
     }
 }
-//	if (player->IsEven(player->GetScore())) //Check if the score is even
-//	{
-//		for (uint8_t i = 20; i >= 0; --i) //Choose the highest possible number to aim for and still be able to win
-//		{
-//			if ((player->GetScore() - (i * 2)) >= 2) { //Check if scoring a double will leave at least the smallest possible winning score
-//				return i; //A value of 0-20 will be used to throw a double
-//			}
-//		}
-//	}
-//	else {
-//		{
-//			if ((player->GetScore() - i) >= 2 && player->IsOdd(i) ) { //Check if scoring a single will leave at least the smallest possible winning score and if aim is an odd number
-//				player->ThrowSingle(i, *board); //Throw single and aim an odd number to get an even score (odd - odd = even, e.x. 7 - 3 = 4)
-//				return 0; //to end the function the value of 0 will be used to throw a double after throwing a single but it doesnt make any diffrence in simulation
-//			}
-//		}
-//	}
-//		for (uint8_t i = 20; i >= 0; --i) //If score is not even (odd) then throw single.
 
 void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
 {
@@ -189,71 +161,37 @@ void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
     {
         player->SetScore(temp);
         player->SetBustedToTrue();
-//        _busted = true;
     }
 }
 
-GenericPlayer* Game::WhoFirst(GenericPlayer* playerOne, GenericPlayer* playerTwo)
+GenericPlayer* Game::WhoFirst()
 {
     uint16_t percentage = rand()%100 + 1; //random number between 1-100
-
     do {
-        playerOne->ThrowBullPercentage(percentage); //put50aspercentage
-        if (playerOne->GetBull()) {
-            std::cout << "Player One Scored Bull!" << std::endl;
-            return playerOne;
-        } else {
-            std::cout << "Player One Missed Bull!" << std::endl;
+
+        for(int i = 0; i < _players.size(); ++i) {
+            auto p = _players[i];
+            std::cout << p->GetName() << " aims for bull!" << std::endl;
+            p->ThrowBullPercentage(percentage);
+            if(!p->GetBull()) {
+                std::cout << p->GetName() << " missed bull!" << std::endl;
+                continue;
+            }
+            
+            _currentPlayer = i;
+            std::cout << p->GetName() << " hit bull!" << std::endl;
+            return p;
         }
-        playerTwo->ThrowBullPercentage(percentage);
-        if (playerTwo->GetBull()) {
-            std::cout << "Player Two Score Bull!" << std::endl;
-            return playerTwo;
-        } else {
-            std::cout << "Player Two Missed Bull!" << std::endl;
-        }
-    } while ( true );
-    return 0;
+    } while(true);
 }
 
-GenericPlayer* Game::Oponent(GenericPlayer* playerOne, GenericPlayer* playerTwo)
-{
-    if (playerOne->GetBull()) {
-        return playerTwo;
-    }
-    if (playerTwo->GetBull()) {
-        return playerOne;
-    }
-    return 0;
-}
-
-
-void Game::DisplayWinner(GenericPlayer* playerOne, GenericPlayer* playerTwo)
-{
-    if (playerOne->CheckWin()) {
-        _player1WinCounter++;
-        if (_player1WinCounter == 1) {
-            std::cout << "Player One wins! He has won " << _player1WinCounter << " time!\n";
-            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
-        }
-        else {
-            std::cout << "Player One wins! He has won " << _player1WinCounter << " times!\n";
-            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
-        }
-    }
-    else if (playerTwo->CheckWin()) {
-        _player2WinCounter++;
-        if (_player2WinCounter == 1) {
-            std::cout << "Player Two wins! He has won " << _player2WinCounter << " time!\n";
-            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
-        }
-        else {
-            std::cout << "Player Two wins! He has won " << _player2WinCounter << " times!\n";
-            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
-        }
-    }
-    else {
-        std::cout << "Nobody has won!";
+void Game::DisplayEndGame(std::size_t winnerIndex) {
+    // we display the winner!
+    std::cout << _players[winnerIndex]->GetName() << " has won this round!" << std::endl;
+    _players[winnerIndex]->IncrementWinCounter();
+    
+    for(auto p : _players) {
+        std::cout << p->GetName() << " has won " << p->GetWinCounter() << " times" << std::endl;;
     }
 }
 
@@ -265,20 +203,36 @@ void Game::DisplayInstructions()
 }
 
 
-void Game::DisplayEndGame(std::size_t winnerIndex) {
-    
-    // we display the winner!
-    
-    std::cout << _players[winnerIndex]->GetName() << " has won this round!" << std::endl;
-    _players[winnerIndex]->IncrementWinCounter();
-    
-    for(auto p : _players) {
-        std::cout << p->GetName() << " has won " << p->GetWinCounter() << " times" << std::endl;;
-    }
-    
-    
-}
 
+
+//void Game::DisplayWinner(GenericPlayer* playerOne, GenericPlayer* playerTwo)
+//{
+//    if (playerOne->CheckWin()) {
+//        _player1WinCounter++;
+//        if (_player1WinCounter == 1) {
+//            std::cout << "Player One wins! He has won " << _player1WinCounter << " time!\n";
+//            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
+//        }
+//        else {
+//            std::cout << "Player One wins! He has won " << _player1WinCounter << " times!\n";
+//            std::cout << "Player Two has won " << _player2WinCounter << " times!\n";
+//        }
+//    }
+//    else if (playerTwo->CheckWin()) {
+//        _player2WinCounter++;
+//        if (_player2WinCounter == 1) {
+//            std::cout << "Player Two wins! He has won " << _player2WinCounter << " time!\n";
+//            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
+//        }
+//        else {
+//            std::cout << "Player Two wins! He has won " << _player2WinCounter << " times!\n";
+//            std::cout << "Player One has won " << _player1WinCounter << " times!\n";
+//        }
+//    }
+//    else {
+//        std::cout << "Nobody has won!";
+//    }
+//}
 
 ////When score is 50
 //if (_pOne->GetScore() == 50)  //Player One 1st Shot

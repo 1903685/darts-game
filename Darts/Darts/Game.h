@@ -49,8 +49,7 @@ private:
 	void CheckBusted(GenericPlayer* player, uint16_t temp);
 	void DisplayWinner(GenericPlayer* playerOne, GenericPlayer* playerTwo);
 	void Throw3Darts(GenericPlayer* player, Board* board);
-    GenericPlayer* WhoFirst(GenericPlayer* playerOne, GenericPlayer* playerTwo);
-    GenericPlayer* Oponent(GenericPlayer* playerOne, GenericPlayer* playerTwo);
+    GenericPlayer* WhoFirst();
 
 	void PlayNineDartFinish();
 

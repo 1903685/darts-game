@@ -229,13 +229,9 @@ void Player::ThrowBullPercentage(uint16_t percentage)
 {
 	//  Throw for the bull with given accuracy
 	uint16_t r = (rand() % 100 + 1);
-	std::cout << "Aim Bull ";
 	if (r <= percentage) { //happens with custom percentage chance
         SetBull(true);
 	}
-    else { //happens with remaining percentage
-        std::cout << "Missed Bull!" << std::endl;
-    }
 }
 
 //int throw_bull(int percentage) {
