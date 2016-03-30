@@ -7,7 +7,7 @@
 #include "GenericPlayer.h"
 #include "Player.h"
 
-Player::Player(int16_t score, std::string name) : GenericPlayer(score, name) 
+Player::Player(int16_t score, std::string name) : _score(score), _name(name), _winCounter(0), _busted(false), _hitBull(false)
 { 
 	std::cout << "Player constructor called!\n";
 }
@@ -92,28 +92,6 @@ std::string Player::GetName()
 void Player::SetName(std::string name)
 {
 	_name = name;
-}
-
-Player Player::WhoFirst(Player* playerOne, Player* playerTwo, Board *board)
-{
-    uint8_t percentage = rand()%100 + 1; //random number between 1-100
-    
-    do {
-        playerOne->ThrowBullPercentage(percentage,  board);
-        if (playerOne->GetBull()) {
-            std::cout << "Player One Scored Bull!" << std::endl;
-            return *playerOne;
-        } else {
-            std::cout << "Player One Missed Bull!" << std::endl;
-        }
-        playerTwo->ThrowBullPercentage(percentage, board);
-        if (playerTwo->GetBull()) {
-            std::cout << "Player Two Score Bull!" << std::endl;
-            return *playerTwo;
-        } else {
-            std::cout << "Player Two Missed Bull!" << std::endl;
-        }
-    } while ( true );
 }
 
 void Player::ThrowSingle(uint16_t d, Board* board)
@@ -247,10 +225,10 @@ void Player::ThrowTriple(uint16_t d, Board* board)
 	}
 }
 
-void Player::ThrowBullPercentage(uint16_t percentage, Board* board)
+void Player::ThrowBullPercentage(uint16_t percentage)
 {
 	//  Throw for the bull with given accuracy
-	int r = (rand() % 100 + 1);
+	uint16_t r = (rand() % 100 + 1);
 	std::cout << "Aim Bull ";
 	if (r <= percentage) { //happens with custom percentage chance
         SetBull(true);
@@ -259,6 +237,20 @@ void Player::ThrowBullPercentage(uint16_t percentage, Board* board)
         std::cout << "Missed Bull!" << std::endl;
     }
 }
+
+//int throw_bull(int percentage) {
+//    
+//    //  Throw for the bull with percent accuracy (20<p<85)
+//    
+//    int random = rand()%100;
+//    
+//    if(random<(percentage-20))
+//    {return 50;}
+//    else if(random<85)
+//    {return 25;	}
+//    else
+//    {return 1+rand()%20;}
+
 
 void Player::ThrowBull()
 {
@@ -319,7 +311,7 @@ void Player::AimThree167s(Board* board) //Aim to score 167
 {
 	ThrowTriple(20, board);
 	ThrowTriple(19, board);
-	ThrowBullPercentage(100, board);
+	ThrowBullPercentage(100);
 }
 
 void Player::NineDartFinish1(Board* board)
@@ -334,4 +326,13 @@ void Player::NineDartFinish2(Board* board)
 	AimTon80(board);
 	AimTon80(board);
 	AimThree167s(board);
+}
+
+
+void Player::IncrementWinCounter() {
+    _winCounter++;
+}
+
+uint16_t Player::GetWinCounter() {
+    return _winCounter;
 }

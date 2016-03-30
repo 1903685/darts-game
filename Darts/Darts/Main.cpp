@@ -25,7 +25,12 @@ int main()
 	cout << pGenericPlayer->GetScore();*/
 	
 	Game game;
-	game.Play();
+    game.Play({
+        new Player(501, "player1"),
+        new Player(501, "player2"),
+        new Player(501, "player3"),
+        new Player(501, "player4")
+    });
 	//game.PlayAdvancedStrategy();
 	/*Board *_pBoard = new Board;
 	Player *_pOne = new Player(501, "K");

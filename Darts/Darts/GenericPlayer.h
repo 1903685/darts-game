@@ -4,12 +4,10 @@
 
 #include <string>
 class Board;
-class Player;
 
 class GenericPlayer
 {
 public:
-	GenericPlayer(int16_t score, std::string name) : _score(score), _name(name) {}
 	virtual ~GenericPlayer() {}
 	//score functions
 	virtual void SetScore(uint16_t score) = 0;
@@ -23,16 +21,16 @@ public:
     virtual bool GetBusted() = 0;
     virtual void SetBull(bool value) = 0;
     virtual bool GetBull() = 0;
-    
-    virtual Player WhoFirst(Player* playerOne, Player* playerTwo, Board *board) = 0;
+    virtual uint16_t GetWinCounter() = 0;
 
 	virtual std::string GetName() = 0;
 	virtual void SetName(std::string name) = 0;
+    virtual void IncrementWinCounter() = 0;
 
 	virtual void ThrowSingle(uint16_t d, Board* board) = 0;
 	virtual void ThrowDouble(uint16_t d, Board* board) = 0;
 	virtual void ThrowTriple(uint16_t d, Board* board) = 0;
-	virtual void ThrowBullPercentage(uint16_t percentage, Board* board) = 0;
+	virtual void ThrowBullPercentage(uint16_t percentage) = 0;
 	virtual void ThrowBull() = 0;
 	virtual void ThrowOuter() = 0;
 	virtual void AimTon80(Board* board) = 0;
@@ -41,12 +39,6 @@ public:
 
 	virtual void NineDartFinish1(Board* board) = 0;
 	virtual void NineDartFinish2(Board* board) = 0;
-
-protected:
-	int16_t _score = 501;
-	std::string _name = "";
-    bool _busted = false;
-    bool _hitBull = false;
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.h"
 
-Game::Game()
+Game::Game() : _players(0), _currentPlayer(0)
 {
 	std::cout << "Game constructor called\n";
 }
@@ -11,12 +11,20 @@ Game::~Game()
 {
 	std::cout << "Game destructor called!\n";
 	delete _pBoard;
-	delete _pOne;
-	delete _pTwo;
+    _pBoard = nullptr;
 }
 
-void Game::Play()
+void Game::Play(const std::vector<GenericPlayer*>& players)
 {
+    _currentPlayer = 0;
+    
+    for(auto* p : _players) {
+        delete p;
+    }
+    _players.clear();
+    
+    _players = players;
+    _currentPlayer = 0;
 	/*std::cout << _pOne->GetName() << std::endl;;
 
 	_pOne->NineDartFinish1(*_pBoard);
@@ -33,17 +41,7 @@ void Game::Play()
 
 	for (int i = 0; i < _simulateCounter; ++i)
 	{
-//		uint8_t r = rand() % 2; //used to randomize strategy
-//        PlayAdvancedStrategy();
-//		switch (r) {
-//		case 0:
-//			PlayAdvancedStrategy();
-//			break;
-//		case 1:
 			PlayNineDartFinish();
-//			break;
-//		}
-		
 	}
 	std::cin.get();
 }
@@ -59,27 +57,56 @@ void Game::Play()
 
 void Game::PlayNineDartFinish()
 {
-    100
-	_pOne->SetScore(_newScore);
+	/*_pOne->SetScore(_newScore);
 	_pTwo->SetScore(_newScore);
 
-	do
+    _pOne = WhoFirst(_pOne, _pTwo);
+    _pTwo = Oponent(_pOne, _pTwo);
+    */
+    for(auto p : _players) {
+        p->SetScore(_newScore);
+    }
+    
+    bool gameOver = false;
+    
+    while(!gameOver) {
+        auto player = NextPlayer();
+        if(player == nullptr) { break; }
+        
+        Throw3Darts(player, _pBoard);
+        
+        gameOver = player->CheckWin();
+    }
+    
+    for(auto p : _players) {
+        p->SetBull(false);
+    }
+    
+    DisplayEndGame(_currentPlayer);
+    
+	/*do
 	{
+        
+        
+        
 		////////Player One Turn
-        std::cout << "Player 1 Score: " << _pOne->GetScore() << std::endl;
+        std::cout << _pOne->GetName() << " Score: " << _pOne->GetScore() << std::endl;
 		Throw3Darts(_pOne, _pBoard);
         if (_pOne->GetScore() == 0) {
             break;
         }
 		////////Player Two Turn
-        std::cout << "Player 2 Score: " << _pTwo->GetScore() << std::endl;
+        std::cout << _pTwo->GetName() << " Score: " << _pTwo->GetScore() << std::endl;
 		Throw3Darts(_pTwo, _pBoard);
 	} while (_pOne->CheckWin() != true && _pTwo->CheckWin() != true);
-
-	DisplayWinner(_pOne, _pTwo);
+    
+    _pOne->SetBull(false);
+    _pTwo->SetBull(false);
+    
+	DisplayWinner(_pOne, _pTwo);*/
 }
 
-void Game::Throw3Darts(Player* player, Board* board) 
+void Game::Throw3Darts(GenericPlayer* player, Board* board)
 {
 	uint16_t _temp = player->GetScore();
     //First Throw
@@ -100,7 +127,7 @@ void Game::Throw3Darts(Player* player, Board* board)
     std::cout << std::endl;
 }
 
-int16_t Game::CheckWinningPosition(Player* player, Board* board) //Playing Nine Dart Finish Strategy
+int16_t Game::CheckWinningPosition(GenericPlayer* player, Board* board) //Playing Nine Dart Finish Strategy
 {
     if (player->GetScore() == 0) {
         return 0;
@@ -156,7 +183,7 @@ int16_t Game::CheckWinningPosition(Player* player, Board* board) //Playing Nine 
 //	}
 //		for (uint8_t i = 20; i >= 0; --i) //If score is not even (odd) then throw single.
 
-void Game::CheckBusted(Player* player, uint16_t temp)
+void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
 {
     if (player->GetScore() < 0 || player->GetScore() == 1 || player->GetBusted()) //Busted if score is smaller then 0 or equal to 1 or not finished on double
     {
@@ -166,7 +193,42 @@ void Game::CheckBusted(Player* player, uint16_t temp)
     }
 }
 
-void Game::DisplayWinner(Player* playerOne, Player* playerTwo)
+GenericPlayer* Game::WhoFirst(GenericPlayer* playerOne, GenericPlayer* playerTwo)
+{
+    uint16_t percentage = rand()%100 + 1; //random number between 1-100
+
+    do {
+        playerOne->ThrowBullPercentage(percentage); //put50aspercentage
+        if (playerOne->GetBull()) {
+            std::cout << "Player One Scored Bull!" << std::endl;
+            return playerOne;
+        } else {
+            std::cout << "Player One Missed Bull!" << std::endl;
+        }
+        playerTwo->ThrowBullPercentage(percentage);
+        if (playerTwo->GetBull()) {
+            std::cout << "Player Two Score Bull!" << std::endl;
+            return playerTwo;
+        } else {
+            std::cout << "Player Two Missed Bull!" << std::endl;
+        }
+    } while ( true );
+    return 0;
+}
+
+GenericPlayer* Game::Oponent(GenericPlayer* playerOne, GenericPlayer* playerTwo)
+{
+    if (playerOne->GetBull()) {
+        return playerTwo;
+    }
+    if (playerTwo->GetBull()) {
+        return playerOne;
+    }
+    return 0;
+}
+
+
+void Game::DisplayWinner(GenericPlayer* playerOne, GenericPlayer* playerTwo)
 {
     if (playerOne->CheckWin()) {
         _player1WinCounter++;
@@ -201,6 +263,22 @@ void Game::DisplayInstructions()
     std::cout << "Choose strategy:\n";
     std::cout << "1 - Cheek Strategy\n";
 }
+
+
+void Game::DisplayEndGame(std::size_t winnerIndex) {
+    
+    // we display the winner!
+    
+    std::cout << _players[winnerIndex]->GetName() << " has won this round!" << std::endl;
+    _players[winnerIndex]->IncrementWinCounter();
+    
+    for(auto p : _players) {
+        std::cout << p->GetName() << " has won " << p->GetWinCounter() << " times" << std::endl;;
+    }
+    
+    
+}
+
 
 ////When score is 50
 //if (_pOne->GetScore() == 50)  //Player One 1st Shot

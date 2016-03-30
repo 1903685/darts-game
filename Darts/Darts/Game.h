@@ -3,6 +3,7 @@
 #define GAME_H
 
 #include <string>
+#include <vector>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"
@@ -14,12 +15,22 @@ public:
 	Game();
 	~Game();
 
-	void Play(); //Plays the game of darts
+    void Play(const std::vector<GenericPlayer*>& players); //Plays the game of darts
+    
+    GenericPlayer* GetCurrentPlayer() {
+        if(_players.size() == 0) return nullptr;
+        return _players[_currentPlayer];
+    }
+    
+    GenericPlayer* NextPlayer() {
+        if(_players.size() == 0) return nullptr;
+        _currentPlayer++;
+        _currentPlayer %= _players.size();
+        return _players[_currentPlayer];
+    }
 
 private:
 	Board *_pBoard = new Board;
-	Player *_pOne = new Player(501, "George");
-	Player *_pTwo = new Player(501, "Matt");
 
 	uint8_t _choice = 0;
 	bool _fail = false;
@@ -31,15 +42,23 @@ private:
 	int16_t _simulateCounter = 0;
 	int16_t _player1WinCounter = 0;
 	int16_t _player2WinCounter = 0;
+    
+    void DisplayEndGame(std::size_t winnerIndex);
 
-	int16_t CheckWinningPosition(Player* player, Board* board);
-	void CheckBusted(Player* player, uint16_t temp);
-	void DisplayWinner(Player* playerOne, Player* playerTwo);
-	void Throw3Darts(Player* player, Board* board);
+	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
+	void CheckBusted(GenericPlayer* player, uint16_t temp);
+	void DisplayWinner(GenericPlayer* playerOne, GenericPlayer* playerTwo);
+	void Throw3Darts(GenericPlayer* player, Board* board);
+    GenericPlayer* WhoFirst(GenericPlayer* playerOne, GenericPlayer* playerTwo);
+    GenericPlayer* Oponent(GenericPlayer* playerOne, GenericPlayer* playerTwo);
 
 	void PlayNineDartFinish();
 
 	void DisplayInstructions();
+    
+    std::size_t _currentPlayer;
+    std::vector<GenericPlayer*> _players;
+    
 };
 
 #endif

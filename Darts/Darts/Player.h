@@ -4,7 +4,6 @@
 
 #include "GenericPlayer.h"
 class Board;
-class Player;
 
 class Player : public GenericPlayer
 {
@@ -23,8 +22,6 @@ public:
     virtual bool GetBusted();
     virtual void SetBull(bool value);
     virtual bool GetBull();
-    
-    virtual Player WhoFirst(Player* playerOne, Player* playerTwo, Board *board);
 
 	virtual std::string GetName();
 	virtual void SetName(std::string name);
@@ -32,7 +29,7 @@ public:
 	virtual void ThrowSingle(uint16_t d, Board* board);
 	virtual void ThrowDouble(uint16_t d, Board* board);
 	virtual void ThrowTriple(uint16_t d, Board* board);
-	virtual void ThrowBullPercentage(uint16_t percentage, Board* board);
+	virtual void ThrowBullPercentage(uint16_t percentage);
 	virtual void ThrowBull();
 	virtual void ThrowOuter();
 	virtual void AimTon80(Board* board);
@@ -41,6 +38,17 @@ public:
 
 	virtual void NineDartFinish1(Board* board);
 	virtual void NineDartFinish2(Board* board);
+    
+    
+    virtual uint16_t GetWinCounter();
+    virtual void IncrementWinCounter();
+    
+private:
+    int16_t _score;
+    uint16_t _winCounter;
+    std::string _name;
+    bool _busted;
+    bool _hitBull;
 };
 
 
