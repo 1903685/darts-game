@@ -17,11 +17,10 @@ public:
 	virtual bool IsOdd(int16_t n);
 	virtual bool IsEven(int16_t n);
 	virtual bool CheckWin();
-    virtual void SetBustedToFalse();
-    virtual void SetBustedToTrue();
+    virtual void SetBusted(bool value);
     virtual bool GetBusted();
-    virtual void SetBull(bool value);
-    virtual bool GetBull();
+    virtual uint16_t GetWinCounter();
+    virtual void IncrementWinCounter();
 
 	virtual std::string GetName();
 	virtual void SetName(std::string name);
@@ -29,7 +28,7 @@ public:
 	virtual void ThrowSingle(uint16_t d, Board* board);
 	virtual void ThrowDouble(uint16_t d, Board* board);
 	virtual void ThrowTriple(uint16_t d, Board* board);
-	virtual void ThrowBullPercentage(uint16_t percentage);
+	virtual bool ThrowBullPercentage(uint16_t percentage);
 	virtual void ThrowBull();
 	virtual void ThrowOuter();
 	virtual void AimTon80(Board* board);
@@ -40,15 +39,12 @@ public:
 	virtual void NineDartFinish2(Board* board);
     
     
-    virtual uint16_t GetWinCounter();
-    virtual void IncrementWinCounter();
     
 private:
     int16_t _score;
     uint16_t _winCounter;
     std::string _name;
     bool _busted;
-    bool _hitBull;
 };
 
 

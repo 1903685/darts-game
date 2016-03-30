@@ -69,10 +69,6 @@ void Game::PlayNineDartFinish()
         player = NextPlayer();
     }
     
-    for(auto p : _players) {
-        p->SetBull(false);
-    }
-    
     DisplayEndGame(_currentPlayer);
     
 	/*do
@@ -97,6 +93,18 @@ void Game::PlayNineDartFinish()
 	DisplayWinner(_pOne, _pTwo);*/
 }
 
+GenericPlayer* Game::GetCurrentPlayer() {
+    if(_players.size() == 0) return nullptr;
+    return _players[_currentPlayer];
+}
+
+GenericPlayer* Game::NextPlayer() {
+    if(_players.size() == 0) return nullptr;
+    _currentPlayer++;
+    _currentPlayer %= _players.size();
+    return _players[_currentPlayer];
+}
+
 void Game::Throw3Darts(GenericPlayer* player, Board* board)
 {
 	uint16_t _temp = player->GetScore();
@@ -113,7 +121,7 @@ void Game::Throw3Darts(GenericPlayer* player, Board* board)
     CheckWinningPosition(player, board);
 	CheckBusted(player, _temp);
     //End turn
-    player->SetBustedToFalse();
+    player->SetBusted(false);
     std::cout << std::endl;
 }
 
@@ -160,7 +168,7 @@ void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
     if (player->GetScore() < 0 || player->GetScore() == 1 || player->GetBusted()) //Busted if score is smaller then 0 or equal to 1 or not finished on double
     {
         player->SetScore(temp);
-        player->SetBustedToTrue();
+        player->SetBusted(true);
     }
 }
 
@@ -172,8 +180,8 @@ GenericPlayer* Game::WhoFirst()
         for(int i = 0; i < _players.size(); ++i) {
             auto p = _players[i];
             std::cout << p->GetName() << " aims for bull!" << std::endl;
-            p->ThrowBullPercentage(percentage);
-            if(!p->GetBull()) {
+
+            if(!p->ThrowBullPercentage(percentage)) {
                 std::cout << p->GetName() << " missed bull!" << std::endl;
                 continue;
             }

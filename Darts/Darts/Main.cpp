@@ -31,10 +31,6 @@ int main()
         new Player(501, "player3"),
         new Player(501, "player4")
     });
-	//game.PlayAdvancedStrategy();
-	/*Board *_pBoard = new Board;
-	Player *_pOne = new Player(501, "K");
-	_pOne->ThrowDouble(0, *_pBoard);*/
 
 	cin.get();
 

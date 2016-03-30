@@ -7,8 +7,8 @@
 #include "GenericPlayer.h"
 #include "Player.h"
 
-Player::Player(int16_t score, std::string name) : _score(score), _name(name), _winCounter(0), _busted(false), _hitBull(false)
-{ 
+Player::Player(int16_t score, std::string name) : _score(score), _name(name), _winCounter(0), _busted(false)
+{
 	std::cout << "Player constructor called!\n";
 }
 
@@ -35,53 +35,27 @@ int16_t Player::GetScore()
 
 bool Player::IsOdd(int16_t n)
 {
-	if (n % 2 != 0)
-		return true;
-	else
-		return false;
+    return (n % 2 != 0);
 }
 
 bool Player::IsEven(int16_t n)
 {
-	if (n % 2 == 0)
-		return true;
-	else
-		return false;
+    return (n % 2 == 0);
 }
 
 bool Player::CheckWin()
 {
-	if (_score == 0) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return (_score == 0);
 }
 
-void Player::SetBustedToFalse()
+void Player::SetBusted(bool value)
 {
-    _busted = false;
-}
-
-void Player::SetBustedToTrue()
-{
-    _busted = true;
+    _busted = value;
 }
 
 bool Player::GetBusted()
 {
     return _busted;
-}
-
-void Player::SetBull(bool value)
-{
-    _hitBull = value;
-}
-
-bool Player::GetBull()
-{
-    return _hitBull;
 }
 
 std::string Player::GetName()
@@ -135,7 +109,7 @@ void Player::ThrowSingle(uint16_t d, Board* board)
 	{
 		SubtractScore(3 * d); //subtract triple score
         if (GetScore() == 0) { //Bust if throwing triple will set score to 0
-            SetBustedToTrue();
+            SetBusted(true);
         }
 		std::cout << "Scored Triple " << d << "(" << 3 * d << ") Score: " << _score << std::endl;
 	}
@@ -192,7 +166,7 @@ void Player::ThrowTriple(uint16_t d, Board* board)
 	{
         SubtractScore(3 * d); //subtract triple score
         if (GetScore() == 0) { //Bust if throwing triple will set score to 0
-            SetBustedToTrue();
+            SetBusted(true);
         }
 		std::cout << "Scored Triple " << d << "(" << 3 * d << ") Score: " << _score << std::endl;
 		//*board->GetScore()) - 3 * d;
@@ -201,7 +175,7 @@ void Player::ThrowTriple(uint16_t d, Board* board)
 	{
 		SubtractScore(3 * (board->GetAtPosition(0, d)) ); //subtract triple score from the left
         if (GetScore() == 0) { //Bust if throwing triple will set score to 0
-            SetBustedToTrue();
+            SetBusted(true);
         }
 		std::cout << "Scored Triple Left " << (board->GetAtPosition(0, d)) << "(" << 3 * (board->GetAtPosition(0, d)) << ") Score: " << _score << std::endl;
 	}
@@ -209,7 +183,7 @@ void Player::ThrowTriple(uint16_t d, Board* board)
 	{
 		SubtractScore(3 * (board->GetAtPosition(1, d)) ); //subtract triple score from the right
         if (GetScore() == 0) { //Bust if throwing triple will set score to 0
-            SetBustedToTrue();
+            SetBusted(true);
         }
 		std::cout << "Scored Triple Right " << (board->GetAtPosition(1, d)) << "(" << 3 * (board->GetAtPosition(1, d)) << ") Score: " << _score << std::endl;
 	}
@@ -225,28 +199,12 @@ void Player::ThrowTriple(uint16_t d, Board* board)
 	}
 }
 
-void Player::ThrowBullPercentage(uint16_t percentage)
+bool Player::ThrowBullPercentage(uint16_t percentage)
 {
 	//  Throw for the bull with given accuracy
 	uint16_t r = (rand() % 100 + 1);
-	if (r <= percentage) { //happens with custom percentage chance
-        SetBull(true);
-	}
+    return r <= percentage;
 }
-
-//int throw_bull(int percentage) {
-//    
-//    //  Throw for the bull with percent accuracy (20<p<85)
-//    
-//    int random = rand()%100;
-//    
-//    if(random<(percentage-20))
-//    {return 50;}
-//    else if(random<85)
-//    {return 25;	}
-//    else
-//    {return 1+rand()%20;}
-
 
 void Player::ThrowBull()
 {
