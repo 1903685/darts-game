@@ -22,8 +22,8 @@ void Game::Play()
     _players.clear(); //removes all elements from the vector
     
     uint16_t numPlayers = SetNumPlayers();
-//    PushNames(SetNumPlayers());
     PushNames(numPlayers);
+    // PushNames(SetNumPlayers());
     
     for (auto& name : _names) {
         _players.push_back(new Player(501, name));
@@ -37,9 +37,9 @@ void Game::Play()
 
 	for (uint32_t i = 0; i < _simulateCounter; ++i)
 	{
+        std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
         PlayNineDartFinish();
 	}
-	std::cin.get();
 }
 
 void Game::PushNames(uint16_t numPlayers) {
@@ -85,11 +85,20 @@ void Game::PlayNineDartFinish()
         
         if(player->CheckWin()) // if current player wins break loop
             break;
+        for (auto& p : _players) {
+            if (p->GetWinCounter() == 5) {
+                _winPlayers.push_back(new Player(501, p->GetName()));
+                if (_winPlayers.size() == 2) {
+                    //PlayNineDartFinish();
+                }
+            }
+        }
         
         player = NextPlayer(); // if current player does not win set p to next player
     }
     
     DisplayEndGame(_currentPlayer);
+    std::cout << std::endl;
 }
 
 GenericPlayer* Game::GetCurrentPlayer() {
@@ -200,7 +209,7 @@ void Game::DisplayEndGame(std::size_t winnerIndex)
     _players[winnerIndex]->IncrementWinCounter();
     
     for(auto p : _players) {
-        std::cout << p->GetName() << " has won " << p->GetWinCounter() << " times" << std::endl;;
+        std::cout << p->GetName() << " has won " << p->GetWinCounter() << " times" << std::endl;
     }
 }
 
