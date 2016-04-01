@@ -21,8 +21,16 @@ void Game::Play(const std::vector<GenericPlayer*>& players)
     }
     _players.clear(); //removes all elements from the vector
     
+    uint16_t numPlayers = SetNumPlayers();
+//    PushNames(SetNumPlayers(), _names);
+    PushNames(numPlayers, _names);
     
-    
+    for (auto& name : _names) {
+        for (auto* p : _players) {
+        p->SetName(name);
+        }
+    }
+
 	std::cout << "How many times you want to play? ";
 	std::cin >> _simulateCounter;
 	std::cout << std::endl;

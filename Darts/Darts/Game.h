@@ -38,7 +38,7 @@ private:
     uint16_t _newScore = 501;
     int16_t _temp = 0;
     int16_t _simulateCounter = 0;
-    std::vector<std::string> _names;
+    const std::vector<std::string>& _names;
 };
 
 //	uint8_t _choice = 0;
