@@ -45,7 +45,7 @@ bool Player::IsEven(int16_t n)
 
 bool Player::CheckWin()
 {
-	return (_score == 0);
+	return (_score == 0); //return true when score equals 0
 }
 
 void Player::SetBusted(bool value)
@@ -231,9 +231,9 @@ void Player::ThrowTriple(uint16_t d, Board* board)
 
 bool Player::ThrowBullPercentage(uint16_t percentage)
 {
-	//  Throw for the bull with given accuracy
+	//  Aim for the bull with given accuracy
 	uint16_t r = (rand() % 100 + 1);
-    return (r <= percentage);
+    return (r <= percentage); //return true if hit the bull else return false
 }
 
 void Player::ThrowBull()

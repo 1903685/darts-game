@@ -13,8 +13,6 @@ ostream& operator<<(ostream& os, const Board& Board);
 
 int main()
 {
-	srand(static_cast<unsigned int>(time(0)));
-	
 	Game game;
     game.Play({
         new Player(501, "player1"),

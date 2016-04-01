@@ -12,7 +12,7 @@
 class Game
 {
 public:
-	Game();
+    Game();
 	~Game();
 
     void Play(const std::vector<GenericPlayer*>& players); //Plays the game of darts
@@ -22,10 +22,12 @@ private:
     Board *_pBoard = new Board;
     GenericPlayer* GetCurrentPlayer();
     GenericPlayer* NextPlayer();
-    
-
-	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
     GenericPlayer* WhoFirst();
+    
+    void PushNames(uint16_t numPlayers, std::vector<std::string> names);
+    uint16_t SetNumPlayers();
+        
+	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
     void PlayNineDartFinish();
     void Throw3Darts(GenericPlayer* player, Board* board);
     void CheckBusted(GenericPlayer* player, uint16_t temp);
@@ -36,7 +38,7 @@ private:
     uint16_t _newScore = 501;
     int16_t _temp = 0;
     int16_t _simulateCounter = 0;
-    
+    std::vector<std::string> _names;
 };
 
 //	uint8_t _choice = 0;

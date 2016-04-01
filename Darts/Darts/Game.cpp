@@ -1,11 +1,7 @@
 #include <iostream>
 #include "Game.h"
 
-Game::Game() : _players(0), _currentPlayer(0)
-{
-	std::cout << "Game constructor called\n";
-}
-
+Game::Game() : _players(0), _currentPlayer(0) {}
 
 Game::~Game()
 {
@@ -16,25 +12,43 @@ Game::~Game()
 
 void Game::Play(const std::vector<GenericPlayer*>& players)
 {
+    srand(static_cast<unsigned int>(time(0)));
+
     _currentPlayer = 0;
     
-    for(auto* p : _players) {
+    for(auto* p : _players) { //make sure there are no remaining pointers in vector of players
         delete p;
     }
-    _players.clear();
+    _players.clear(); //removes all elements from the vector
     
-    _players = players;
-    _currentPlayer = 0;
-
+    
+    
 	std::cout << "How many times you want to play? ";
 	std::cin >> _simulateCounter;
 	std::cout << std::endl;
 
-	for (int i = 0; i < _simulateCounter; ++i)
+	for (uint32_t i = 0; i < _simulateCounter; ++i)
 	{
 			PlayNineDartFinish();
 	}
 	std::cin.get();
+}
+
+void Game::PushNames(uint16_t numPlayers, std::vector<std::string> names) {
+    std::string name;
+    for (uint16_t i = 0; i < numPlayers; ++i) {
+        std::cout << "Player " << i << " name: ";
+        std::cin >> name;
+        names.push_back(name);
+    }
+}
+
+uint16_t Game::SetNumPlayers() {
+    uint16_t numPlayers = 0;
+    std::cout << "How many players? ";
+    std::cin >> numPlayers;
+    
+    return numPlayers;
 }
 
 //do {
@@ -55,12 +69,16 @@ void Game::PlayNineDartFinish()
     auto player = WhoFirst();
     while(true) {
         
-        if(player == nullptr) { break; }
-        std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
-        Throw3Darts(player, _pBoard);
+        if(player == nullptr) //if p is empty break loop
+            break;
         
-        if(player->CheckWin()) break;
-        player = NextPlayer();
+        std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
+        Throw3Darts(player, _pBoard); // Each player throws 3 darts
+        
+        if(player->CheckWin()) // if current player wins break loop
+            break;
+        
+        player = NextPlayer(); // if current player does not win set p to next player
     }
     
     DisplayEndGame(_currentPlayer);
@@ -71,10 +89,10 @@ GenericPlayer* Game::GetCurrentPlayer() {
     return _players[_currentPlayer];
 }
 
-GenericPlayer* Game::NextPlayer() {
+GenericPlayer* Game::NextPlayer() { //get next player
     if(_players.size() == 0) return nullptr;
     _currentPlayer++;
-    _currentPlayer %= _players.size();
+    _currentPlayer %= _players.size(); //cp = 0, 1%4 = 1, 2%4 = 2, 3%4= 3, 4%4 = 0
     return _players[_currentPlayer];
 }
 
@@ -146,27 +164,30 @@ void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
 }
 
 GenericPlayer* Game::WhoFirst()
-{
-    do {
+{ //determines who throws first
+    do { // aim for bull until someone scores
 
-        for(int i = 0; i < _players.size(); ++i) {
-            auto p = _players[i];
+        for(uint i = 0; i < _players.size(); ++i) //every player aims for bull
+        {
+            auto p = _players[i]; //set p to player who aims for bull
             std::cout << p->GetName() << " aims for bull!" << std::endl;
 
-            if(!p->ThrowBullPercentage(50)) {
+            if(!p->ThrowBullPercentage(50)) //aim bull with 50% accuracy
+            { //if not hit the bull continue with next player
                 std::cout << p->GetName() << " missed bull!" << std::endl;
                 continue;
             }
-            
-            _currentPlayer = i;
+            //happens if the players scores the bull
+            _currentPlayer = i; //set _currentPlayer value to value position of player
+//            who scored bull (if player 1 scored bull set _currentPosition to 0)
             std::cout << p->GetName() << " hit bull!" << std::endl << std::endl;
-            return p;
+            return p; //returns pointer to player who scored bull
         }
     } while(true);
 }
 
-void Game::DisplayEndGame(std::size_t winnerIndex) {
-    // we display the winner!
+void Game::DisplayEndGame(std::size_t winnerIndex)
+{   // display winner
     std::cout << _players[winnerIndex]->GetName() << " has won this round!" << std::endl;
     _players[winnerIndex]->IncrementWinCounter();
     
