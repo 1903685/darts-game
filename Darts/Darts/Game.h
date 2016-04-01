@@ -25,8 +25,8 @@ private:
     GenericPlayer* NextPlayer();
     GenericPlayer* WhoFirst();
     
-    void PushNames();
-    void SetNumPlayers();
+    void PushNames(uint16_t numPlayers);
+    uint16_t SetNumPlayers();
         
 	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
     void PlayNineDartFinish();
