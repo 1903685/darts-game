@@ -22,7 +22,7 @@ void Game::Play()
     }
     _players.clear(); //removes all elements from the vector
     
-    uint16_t numPlayers = SetNumPlayers();
+//    uint16_t numPlayers = SetNumPlayers();
 //    PushNames(SetNumPlayers(), _names);
     PushNames(numPlayers);
     
@@ -41,21 +41,20 @@ void Game::Play()
 	std::cin.get();
 }
 
-void Game::PushNames(uint16_t numPlayers) {
+void Game::PushNames() {
     std::string name;
-    for (uint16_t i = 0; i < numPlayers; ++i) {
-        std::cout << "Player " << i << " name: ";
+    for (uint16_t i = 0; i < _names.size(); ++i) {
+        std::cout << "Player " << i + 1 << " name: ";
         std::cin >> name;
         _names.push_back(name);
     }
 }
 
-uint16_t Game::SetNumPlayers() {
+void Game::SetNumPlayers() {
     uint16_t numPlayers = 0;
     std::cout << "How many players? ";
     std::cin >> numPlayers;
-    
-    return numPlayers;
+    _names.reserve(numPlayers);
 }
 
 //do {
