@@ -20,7 +20,6 @@ public:
 private:
     std::size_t _currentPlayer;
     std::vector<GenericPlayer*> _players;
-    std::vector<GenericPlayer*> _winPlayers;
     Board *_pBoard = new Board;
     GenericPlayer* GetCurrentPlayer();
     GenericPlayer* NextPlayer();

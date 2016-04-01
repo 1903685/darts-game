@@ -84,17 +84,9 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
         
         if(player->CheckWin()) break; // if current player wins break loop
         
-        if (player->GetWinCounter() == 5) {
-            _winPlayers.push_back(new Player(501, player->GetName()));
-        }
-        
-        if (_winPlayers.size() == 2) {
-            std::cout << "Boom";
-            break;
-        }
         player = NextPlayer(); // if current player does not win set p to next player
     }
-    if (_winPlayers.size() == 2) PlayNineDartFinish(_winPlayers);
+
     DisplayEndGame(_currentPlayer);
     std::cout << std::endl;
 }
