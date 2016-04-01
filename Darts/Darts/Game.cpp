@@ -24,14 +24,12 @@ void Game::Play()
     
     uint16_t numPlayers = SetNumPlayers();
 //    PushNames(SetNumPlayers(), _names);
-    PushNames(numPlayers, _names);
+    PushNames(numPlayers);
     
     for (auto& name : _names) {
-        for (auto* p : _players) {
-        p->SetName(name);
-        }
+        _players.push_back(new Player(501, name));
     }
-
+    
 	std::cout << "How many times you want to play? ";
 	std::cin >> _simulateCounter;
 	std::cout << std::endl;
@@ -43,12 +41,12 @@ void Game::Play()
 	std::cin.get();
 }
 
-void Game::PushNames(uint16_t numPlayers, std::vector<std::string> names) {
+void Game::PushNames(uint16_t numPlayers) {
     std::string name;
     for (uint16_t i = 0; i < numPlayers; ++i) {
         std::cout << "Player " << i << " name: ";
         std::cin >> name;
-        names.push_back(name);
+        _names.push_back(name);
     }
 }
 

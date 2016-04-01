@@ -25,7 +25,7 @@ private:
     GenericPlayer* NextPlayer();
     GenericPlayer* WhoFirst();
     
-    void PushNames(uint16_t numPlayers, std::vector<std::string> names);
+    void PushNames(uint16_t numPlayers);
     uint16_t SetNumPlayers();
         
 	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
