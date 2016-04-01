@@ -15,7 +15,6 @@ void Game::Play()
 {
     srand(static_cast<unsigned int>(time(0)));
 
-    _currentPlayer = 0;
     
     for(auto* p : _players) { //make sure there are no remaining pointers in vector of players
         delete p;
@@ -23,12 +22,14 @@ void Game::Play()
     _players.clear(); //removes all elements from the vector
     
     uint16_t numPlayers = SetNumPlayers();
-//    PushNames(SetNumPlayers(), _names);
+//    PushNames(SetNumPlayers());
     PushNames(numPlayers);
     
     for (auto& name : _names) {
         _players.push_back(new Player(501, name));
     }
+    
+//    _currentPlayer = 0;
     
 	std::cout << "How many times you want to play? ";
 	std::cin >> _simulateCounter;
@@ -36,7 +37,7 @@ void Game::Play()
 
 	for (uint32_t i = 0; i < _simulateCounter; ++i)
 	{
-			PlayNineDartFinish();
+        PlayNineDartFinish();
 	}
 	std::cin.get();
 }
@@ -174,7 +175,7 @@ GenericPlayer* Game::WhoFirst()
 { //determines who throws first
     do { // aim for bull until someone scores
 
-        for(uint i = 0; i < _players.size(); ++i) //every player aims for bull
+        for(u_long i = _currentPlayer; i < _players.size(); ++i) //last wining player aims bull first
         {
             auto p = _players[i]; //set p to player who aims for bull
             std::cout << p->GetName() << " aims for bull!" << std::endl;
