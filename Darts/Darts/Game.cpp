@@ -38,7 +38,7 @@ void Game::Play()
 	for (uint32_t i = 0; i < _simulateCounter; ++i)
 	{
         std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
-        PlayNineDartFinish();
+        PlayNineDartFinish(_players);
 	}
 }
 
@@ -68,35 +68,33 @@ uint16_t Game::SetNumPlayers() {
 //	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 //} while (_fail);
 
-void Game::PlayNineDartFinish()
+void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
 {
-    for(auto p : _players) {
+    for(auto p : players) {
         p->SetScore(_newScore);
     }
     
     auto player = WhoFirst();
     while(true) {
         
-        if(player == nullptr) //if p is empty break loop
-            break;
+        if(player == nullptr) break; //if p is empty break loop
         
         std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
         Throw3Darts(player, _pBoard); // Each player throws 3 darts
         
-        if(player->CheckWin()) // if current player wins break loop
-            break;
-        for (auto& p : _players) {
-            if (p->GetWinCounter() == 5) {
-                _winPlayers.push_back(new Player(501, p->GetName()));
-                if (_winPlayers.size() == 2) {
-                    //PlayNineDartFinish();
-                }
-            }
+        if(player->CheckWin()) break; // if current player wins break loop
+        
+        if (player->GetWinCounter() == 5) {
+            _winPlayers.push_back(new Player(501, player->GetName()));
         }
         
+        if (_winPlayers.size() == 2) {
+            std::cout << "Boom";
+            break;
+        }
         player = NextPlayer(); // if current player does not win set p to next player
     }
-    
+    if (_winPlayers.size() == 2) PlayNineDartFinish(_winPlayers);
     DisplayEndGame(_currentPlayer);
     std::cout << std::endl;
 }
@@ -186,19 +184,19 @@ GenericPlayer* Game::WhoFirst()
 
         for(u_long i = _currentPlayer; i < _players.size(); ++i) //last wining player aims bull first
         {
-            auto p = _players[i]; //set p to player who aims for bull
-            std::cout << p->GetName() << " aims for bull!" << std::endl;
+            auto player = _players[i]; //set p to player who aims for bull
+            std::cout << player->GetName() << " aims for bull!" << std::endl;
 
-            if(!p->ThrowBullPercentage(50)) //aim bull with 50% accuracy
+            if(!player->ThrowBullPercentage(50)) //aim bull with 50% accuracy
             { //if not hit the bull continue with next player
-                std::cout << p->GetName() << " missed bull!" << std::endl;
+                std::cout << player->GetName() << " missed bull!" << std::endl;
                 continue;
             }
             //happens if the players scores the bull
             _currentPlayer = i; //set _currentPlayer value to value position of player
 //            who scored bull (if player 1 scored bull set _currentPosition to 0)
-            std::cout << p->GetName() << " hit bull!" << std::endl << std::endl;
-            return p; //returns pointer to player who scored bull
+            std::cout << player->GetName() << " hit bull!" << std::endl << std::endl;
+            return player; //returns pointer to player who scored bull
         }
     } while(true);
 }

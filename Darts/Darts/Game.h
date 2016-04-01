@@ -30,7 +30,7 @@ private:
     uint16_t SetNumPlayers();
         
 	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
-    void PlayNineDartFinish();
+    void PlayNineDartFinish(const std::vector<GenericPlayer*>& players);
     void Throw3Darts(GenericPlayer* player, Board* board);
     void CheckBusted(GenericPlayer* player, uint16_t temp);
     void DisplayEndGame(std::size_t winnerIndex);
