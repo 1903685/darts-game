@@ -10,7 +10,8 @@ Game::~Game()
     _pBoard = nullptr;
 }
 
-void Game::Play(const std::vector<GenericPlayer*>& players)
+//void Game::Play(const std::vector<GenericPlayer*>& players)
+void Game::Play()
 {
     srand(static_cast<unsigned int>(time(0)));
 

@@ -14,12 +14,13 @@ ostream& operator<<(ostream& os, const Board& Board);
 int main()
 {
 	Game game;
-    game.Play({
-        new Player(501, "player1"),
-        new Player(501, "player2"),
-        new Player(501, "player3"),
-        new Player(501, "player4")
-    });
+    game.Play();
+//    game.Play({
+//        new Player(501, "player1"),
+//        new Player(501, "player2"),
+//        new Player(501, "player3"),
+//        new Player(501, "player4")
+//    });
 
 	cin.get();
 

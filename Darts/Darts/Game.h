@@ -15,7 +15,8 @@ public:
     Game();
 	~Game();
 
-    void Play(const std::vector<GenericPlayer*>& players); //Plays the game of darts
+//    void Play(const std::vector<GenericPlayer*>& players); //Plays the game of darts
+    void Play(); //Plays the game of darts
 private:
     std::size_t _currentPlayer;
     std::vector<GenericPlayer*> _players;
@@ -38,7 +39,7 @@ private:
     uint16_t _newScore = 501;
     int16_t _temp = 0;
     int16_t _simulateCounter = 0;
-    const std::vector<std::string>& _names;
+    std::vector<std::string> _names;
 };
 
 //	uint8_t _choice = 0;
