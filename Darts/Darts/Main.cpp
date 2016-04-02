@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdint>
 #include <ctime>
+#include <Windows.h>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"
@@ -14,15 +15,14 @@ ostream& operator<<(ostream& os, const Board& Board);
 int main()
 {
 	Game game;
-    game.Play();
+   game.Play();
 //    game.Play({
 //        new Player(501, "player1"),
 //        new Player(501, "player2"),
 //        new Player(501, "player3"),
 //        new Player(501, "player4")
 //    });
-
-	cin.get();
+   cin.get();
 
 	return 0;
 }

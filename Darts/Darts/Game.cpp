@@ -1,4 +1,7 @@
 #include <iostream>
+#include <time.h>
+#include <Windows.h>
+#include "Defines.h"
 #include "Game.h"
 
 Game::Game() : _players(0), _currentPlayer(0) {}
@@ -6,6 +9,10 @@ Game::Game() : _players(0), _currentPlayer(0) {}
 Game::~Game()
 {
 	std::cout << "Game destructor called!\n";
+	for (auto& p : _players) {
+		delete p;
+		p = nullptr;
+	}
 	delete _pBoard;
     _pBoard = nullptr;
 }
@@ -14,8 +21,7 @@ Game::~Game()
 void Game::Play()
 {
     srand(static_cast<unsigned int>(time(0)));
-
-    
+	
     for(auto* p : _players) { //make sure there are no remaining pointers in vector of players
         delete p;
     }
@@ -69,16 +75,38 @@ uint16_t Game::SetNumPlayers() {
 //} while (_fail);
 
 void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
-{
+{	
+	// Tell the user how to stop
+	/*SetConsoleTextAttribute(hstdout, 0xEC);
+	std::cout << "Press any key to quit.\n";*/
+
+	// Draw pretty colors until the user presses any key
+	/*while (WaitForSingleObject(hstdin, 100) == WAIT_TIMEOUT)
+	{
+	SetConsoleTextAttribute(hstdout, colors[index]);
+	std::cout << "\t\t\t\t Hello World \t\t\t\t" << std::endl;
+	if (++index > sizeof(colors) / sizeof(colors[0]))
+	index = 0;
+	}*/
+
+	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
+	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	//WORD index = 0;
+
+	// Remember how things were when we started
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(hstdout, &csbi);
+
     for(auto p : players) {
         p->SetScore(_newScore);
     }
     
     auto player = WhoFirst();
     while(true) {
-        
         if(player == nullptr) break; //if p is empty break loop
-        
+
+		SetConsoleTextAttribute(hstdout, _currentPlayer + 2);
+
         std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
         Throw3Darts(player, _pBoard); // Each player throws 3 darts
         
@@ -87,7 +115,11 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
         player = NextPlayer(); // if current player does not win set p to next player
     }
 
+	FlushConsoleInputBuffer(hstdin);
+	// Keep users happy
+	SetConsoleTextAttribute(hstdout, csbi.wAttributes);
     DisplayEndGame(_currentPlayer);
+	
     std::cout << std::endl;
 }
 
@@ -174,7 +206,7 @@ GenericPlayer* Game::WhoFirst()
 { //determines who throws first
     do { // aim for bull until someone scores
 
-        for(u_long i = _currentPlayer; i < _players.size(); ++i) //last wining player aims bull first
+        for(long i = _currentPlayer; i < _players.size(); ++i) //last wining player aims bull first
         {
             auto player = _players[i]; //set p to player who aims for bull
             std::cout << player->GetName() << " aims for bull!" << std::endl;

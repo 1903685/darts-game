@@ -35,6 +35,7 @@ private:
     void DisplayEndGame(std::size_t winnerIndex);
     
 	void DisplayInstructions();
+	
     
     uint16_t _newScore = 501;
     int16_t _temp = 0;
