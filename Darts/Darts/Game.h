@@ -36,6 +36,7 @@ private:
     
 	void DisplayInstructions();
     
+	int _choice = 1;
     uint16_t _newScore = 501;
     int16_t _temp = 0;
     int16_t _simulateCounter = 0;

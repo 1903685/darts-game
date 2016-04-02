@@ -15,7 +15,7 @@ ostream& operator<<(ostream& os, const Board& Board);
 int main()
 {
 	Game game;
-   game.Play();
+    game.Play();
 //    game.Play({
 //        new Player(501, "player1"),
 //        new Player(501, "player2"),

@@ -2,7 +2,6 @@
 #define DEFINES_H
 
 #include <cstdint>
-#include <vector>
 #include <Windows.h>
 
 const uint16_t TON = 100;
@@ -10,7 +9,7 @@ const uint16_t BULL = 50;
 const uint16_t OUTER = 25;
 const uint16_t X = 2;
 const uint16_t Y = 21;
-
+enum Choice { Exit, CompVsComp, CompVsHuman, HumanVsHuman };
 const WORD colors[] =
 {
 	0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,

@@ -20,31 +20,43 @@ Game::~Game()
 //void Game::Play(const std::vector<GenericPlayer*>& players)
 void Game::Play()
 {
-    srand(static_cast<unsigned int>(time(0)));
+	srand(static_cast<unsigned int>(time(0)));
 	
-    for(auto* p : _players) { //make sure there are no remaining pointers in vector of players
-        delete p;
-    }
-    _players.clear(); //removes all elements from the vector
-    
-    uint16_t numPlayers = SetNumPlayers();
-    PushNames(numPlayers);
-    // PushNames(SetNumPlayers());
-    
-    for (auto& name : _names) {
-        _players.push_back(new Player(501, name));
-    }
-    
-//    _currentPlayer = 0;
-    
-	std::cout << "How many times you want to play? ";
-	std::cin >> _simulateCounter;
-	std::cout << std::endl;
+	while (_choice != 0) {
+		for (auto* p : _players) { //make sure there are no remaining pointers in vector of players
+			delete p;
+		}
+		_players.clear(); //removes all elements from the vector
 
-	for (uint32_t i = 0; i < _simulateCounter; ++i)
-	{
-        std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
-        PlayNineDartFinish(_players);
+		DisplayInstructions();
+		std::cout << "Choice: ";
+		std::cin >> _choice;
+
+		switch (_choice) {
+		case (Exit) :
+			_choice = 0;
+			break;
+		case (CompVsComp) : {
+								uint16_t numPlayers = SetNumPlayers();
+								PushNames(numPlayers);
+
+								for (auto& name : _names) {
+									_players.push_back(new Player(501, name));
+								}
+
+								std::cout << "How many times you want to play? ";
+								std::cin >> _simulateCounter;
+								std::cout << std::endl;
+
+								for (int32_t i = 0; i < _simulateCounter; ++i)
+								{
+									std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
+									PlayNineDartFinish(_players);
+								}
+		} break;
+
+		default: break;
+		}
 	}
 }
 
@@ -65,15 +77,6 @@ uint16_t Game::SetNumPlayers() {
     return numPlayers;
 }
 
-//do {
-//	std::cin >> _simulateCounter;
-//	std::cout << std::endl;
-//	_fail = std::cin.fail();
-//
-//	std::cin.clear();
-//	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//} while (_fail);
-
 void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
 {	
 	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
@@ -92,7 +95,7 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
     while(true) {
         if(player == nullptr) break; //if p is empty break loop
 		
-		long color = _currentPlayer + 3;
+		WORD color = _currentPlayer + 3;
 		if (color >= 16) color = 0;
 		SetConsoleTextAttribute(hstdout, color);
 
@@ -226,7 +229,19 @@ void Game::DisplayEndGame(std::size_t winnerIndex)
 
 void Game::DisplayInstructions()
 {
-    std::cout << "Hello Fella! You are about to simulate or play exciting game of Darts 501!\n";
-    std::cout << "Choose strategy:\n";
-    std::cout << "1 - Cheek Strategy\n";
+    std::cout << "\n\nWeclome to the game of Darts 501!\n";
+    std::cout << "Choose game:\n";
+    std::cout << "1 - Computer vs. Computer\n";
+	std::cout << "2 - Human vs. Computer\n";
+	std::cout << "3 - Human vs. Humanz\n";
+	std::cout << "0 - Exit\n";
 }
+
+//do {
+//	std::cin >> _simulateCounter;
+//	std::cout << std::endl;
+//	_fail = std::cin.fail();
+//
+//	std::cin.clear();
+//	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//} while (_fail);
