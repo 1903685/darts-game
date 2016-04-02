@@ -2,6 +2,7 @@
 #define DEFINES_H
 
 #include <cstdint>
+#include <vector>
 #include <Windows.h>
 
 const uint16_t TON = 100;
@@ -15,6 +16,7 @@ const WORD colors[] =
 	0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
 	0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
 };
+
 //typedef std::vector<int> Column;	// One Column of the matrix
 //typedef std::vector<Column> Matrix; // Matrix: a vector of Columns
 //typedef std::vector<int>::iterator col_iter;

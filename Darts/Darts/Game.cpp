@@ -76,19 +76,6 @@ uint16_t Game::SetNumPlayers() {
 
 void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
 {	
-	// Tell the user how to stop
-	/*SetConsoleTextAttribute(hstdout, 0xEC);
-	std::cout << "Press any key to quit.\n";*/
-
-	// Draw pretty colors until the user presses any key
-	/*while (WaitForSingleObject(hstdin, 100) == WAIT_TIMEOUT)
-	{
-	SetConsoleTextAttribute(hstdout, colors[index]);
-	std::cout << "\t\t\t\t Hello World \t\t\t\t" << std::endl;
-	if (++index > sizeof(colors) / sizeof(colors[0]))
-	index = 0;
-	}*/
-
 	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
 	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	//WORD index = 0;
@@ -104,8 +91,10 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
     auto player = WhoFirst();
     while(true) {
         if(player == nullptr) break; //if p is empty break loop
-
-		SetConsoleTextAttribute(hstdout, _currentPlayer + 2);
+		
+		long color = _currentPlayer + 3;
+		if (color >= 16) color = 0;
+		SetConsoleTextAttribute(hstdout, color);
 
         std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
         Throw3Darts(player, _pBoard); // Each player throws 3 darts
