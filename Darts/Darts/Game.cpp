@@ -1,6 +1,6 @@
 #include <iostream>
 #include <time.h>
-#include <Windows.h>
+//#include <Windows.h>
 #include "Defines.h"
 #include "Game.h"
 
@@ -80,13 +80,13 @@ uint16_t Game::SetNumPlayers() {
 
 void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
 {	
-	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
-	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+//	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
+//	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	//WORD index = 0;
 
 	// Remember how things were when we started
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(hstdout, &csbi);
+//	CONSOLE_SCREEN_BUFFER_INFO csbi;
+//	GetConsoleScreenBufferInfo(hstdout, &csbi);
 
     for(auto p : players) {
         p->SetScore(_newScore);
@@ -96,9 +96,9 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
     while(true) {
         if(player == nullptr) break; //if p is empty break loop
 		
-		WORD color = _currentPlayer + 3;
-		if (color >= 16) color = 3; //there's only 16 colors and 0 is black
-		SetConsoleTextAttribute(hstdout, color);
+//		WORD color = _currentPlayer + 3;
+//		if (color >= 16) color = 3; //there's only 16 colors and 0 is black
+//		SetConsoleTextAttribute(hstdout, color);
 
         std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
         Throw3Darts(player, _pBoard); // Each player throws 3 darts
@@ -108,9 +108,9 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
         player = NextPlayer(); // if current player does not win set p to next player
     }
 
-	FlushConsoleInputBuffer(hstdin);
-	// Keep users happy
-	SetConsoleTextAttribute(hstdout, csbi.wAttributes);
+//	FlushConsoleInputBuffer(hstdin);
+//	// Keep users happy
+//	SetConsoleTextAttribute(hstdout, csbi.wAttributes);
     DisplayEndGame(_currentPlayer);
 	
     std::cout << std::endl;

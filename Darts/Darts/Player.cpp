@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <ctime>
 #include <string>
-#include <Windows.h>
+//#include <Windows.h>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdint>
 #include <ctime>
-#include <Windows.h>
+//1#include <Windows.h>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"
