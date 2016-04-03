@@ -96,7 +96,7 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
         if(player == nullptr) break; //if p is empty break loop
 		
 		WORD color = _currentPlayer + 3;
-		if (color >= 16) color = 0;
+		if (color >= 16) color = 3; //there's only 16 colors and 0 is black
 		SetConsoleTextAttribute(hstdout, color);
 
         std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
@@ -229,11 +229,16 @@ void Game::DisplayEndGame(std::size_t winnerIndex)
 
 void Game::DisplayInstructions()
 {
-    std::cout << "\n\nWeclome to the game of Darts 501!\n";
-    std::cout << "Choose game:\n";
-    std::cout << "1 - Computer vs. Computer\n";
-	std::cout << "2 - Human vs. Computer\n";
-	std::cout << "3 - Human vs. Humanz\n";
+	std::cout << "\n\nWeclome to the Darts 501 Game Simulator!";
+	std::cout << "\nYou can choose how many players will compete";
+	std::cout << "\nAs well as how many games you want to simulate.";
+	std::cout << "\nPlayers will throw 3 darts for a turn.";
+	std::cout << "\nThe score and throws will be displayed like this:";
+	std::cout << "\n'Turn number' 'Score'";
+	std::cout << "\n'Player's aim'";
+	std::cout << "\n'Player's hit score'('Exact hit score') 'New score = Old Score - Hit Score'";
+	std::cout << "Press:\n";
+	std::cout << "1 - Simulate\n";
 	std::cout << "0 - Exit\n";
 }
 
