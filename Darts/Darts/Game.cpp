@@ -33,28 +33,29 @@ void Game::Play()
 		std::cin >> _choice;
 
 		switch (_choice) {
-		case (Exit) :
-			_choice = 0;
-			break;
-		case (CompVsComp) : {
-								uint16_t numPlayers = SetNumPlayers();
-								PushNames(numPlayers);
+		case (Simulation) : {
+            uint16_t numPlayers = SetNumPlayers();
+            PushNames(numPlayers);
 
-								for (auto& name : _names) {
-									_players.push_back(new Player(501, name));
-								}
+            for (auto& name : _names) {
+                _players.push_back(new Player(501, name));
+            }
 
-								std::cout << "How many times you want to play? ";
-								std::cin >> _simulateCounter;
-								std::cout << std::endl;
+            std::cout << "How many times you want to play? ";
+            std::cin >> _simulateCounter;
+            std::cout << std::endl;
 
-								for (int32_t i = 0; i < _simulateCounter; ++i)
-								{
-									std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
-									PlayNineDartFinish(_players);
-								}
+            for (int32_t i = 0; i < _simulateCounter; ++i)
+            {
+                std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
+                PlayNineDartFinish(_players);
+            }
 		} break;
 
+        case (Exit) :
+            _choice = 0;
+            break;
+                
 		default: break;
 		}
 	}
