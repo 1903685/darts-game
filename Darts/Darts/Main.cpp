@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdint>
 #include <ctime>
+#include <Windows.h>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"
@@ -13,22 +14,15 @@ ostream& operator<<(ostream& os, const Board& Board);
 
 int main()
 {
-	srand(static_cast<unsigned int>(time(0)));
-	
-	/*Matrix my_matrix(4, Column(5));
-	my_matrix = { { 12 }, { 12 } };
-	cout << my_matrix[1][0];*/
-	
-	/*GenericPlayer *pGenericPlayer = new Player(501, "Geoarge");
-
-	pGenericPlayer->NineDartFinish1(board);
-	cout << pGenericPlayer->GetScore();*/
-	
 	Game game;
-	//game.Play();
-	game.PlayAdvancedStrategy();
-
-	cin.get();
+    game.Play();
+//    game.Play({
+//        new Player(501, "player1"),
+//        new Player(501, "player2"),
+//        new Player(501, "player3"),
+//        new Player(501, "player4")
+//    });
+   cin.get();
 
 	return 0;
 }

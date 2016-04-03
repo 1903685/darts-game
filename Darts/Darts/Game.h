@@ -3,6 +3,7 @@
 #define GAME_H
 
 #include <string>
+#include <vector>
 #include "Defines.h"
 #include "Board.h"
 #include "GenericPlayer.h"
@@ -11,24 +12,42 @@
 class Game
 {
 public:
-	Game();
+    Game();
 	~Game();
 
-	void Play(); //Plays the game of darts
-	void PlayAdvancedStrategy();
-
+//    void Play(const std::vector<GenericPlayer*>& players); //Plays the game of darts
+    void Play(); //Plays the game of darts
 private:
-	Board *_pBoard = new Board;
-	Player *_pOne = new Player(501, "George");
-	Player *_pTwo = new Player(501, "Matt");
-
-	int16_t CheckWinningPosition(Player* player, Board* board);
-	void DisplayWinner(Player* playerOne, Player* playerTwo);
-	void Throw3Darts(Player* player, Board* board);
-	bool PlayerOneWins = false;
-	bool PlayerTwoWins = false;
-	bool NineDartFinish = true;
+    std::size_t _currentPlayer;
+    std::vector<GenericPlayer*> _players;
+    Board *_pBoard = new Board;
+    GenericPlayer* GetCurrentPlayer();
+    GenericPlayer* NextPlayer();
+    GenericPlayer* WhoFirst();
+    
+    void PushNames(uint16_t numPlayers);
+    uint16_t SetNumPlayers();
+        
+	int16_t CheckWinningPosition(GenericPlayer* player, Board* board);
+    void PlayNineDartFinish(const std::vector<GenericPlayer*>& players);
+    void Throw3Darts(GenericPlayer* player, Board* board);
+    void CheckBusted(GenericPlayer* player, uint16_t temp);
+    void DisplayEndGame(std::size_t winnerIndex);
+    
+	void DisplayInstructions();
+    
+	int _choice = 1;
+    uint16_t _newScore = 501;
+    int16_t _temp = 0;
+    int16_t _simulateCounter = 0;
+    std::vector<std::string> _names;
 };
 
+<<<<<<< HEAD
 #endif
 
+=======
+//	uint8_t _choice = 0;
+//	bool _fail = false;
+#endif
+>>>>>>> master

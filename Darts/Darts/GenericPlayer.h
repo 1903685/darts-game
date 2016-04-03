@@ -8,40 +8,28 @@ class Board;
 class GenericPlayer
 {
 public:
-	GenericPlayer(int16_t score, std::string name) : _score(score), _name(name) {}
 	virtual ~GenericPlayer() {}
 	//score functions
-	virtual void SetScore(int16_t score) = 0;
+	virtual void SetScore(uint16_t score) = 0;
 	virtual void SubtractScore(int16_t points) = 0;
 	virtual int16_t GetScore() = 0;
-	virtual bool IsOdd(uint16_t n) = 0;
-	virtual bool IsEven(uint16_t n) = 0;
+	virtual bool IsOdd(int16_t n) = 0;
+	virtual bool IsEven(int16_t n) = 0;
 	virtual bool CheckWin() = 0;
+    virtual void SetBusted(bool value) = 0;
+    virtual bool GetBusted() = 0;
+    virtual uint16_t GetWinCounter() = 0;
+    virtual void IncrementWinCounter() = 0;
 
 	virtual std::string GetName() = 0;
 	virtual void SetName(std::string name) = 0;
 
-	virtual void ThrowSingle(uint16_t d, Board& board) = 0;
-	virtual void ThrowDouble(uint16_t d, Board& board) = 0;
-	virtual void ThrowTriple(uint16_t d, Board& board) = 0;
-	virtual void ThrowBullPercentage(uint16_t percentage, Board& board) = 0;
-	virtual void ThrowBull(uint16_t r) = 0;
-	virtual void ThrowOuter(uint16_t r) = 0;
-	virtual void AimTon80(Board& board) = 0;
-	virtual void AimCheckout141(Board& board) = 0;
-	virtual void AimThree167s(Board& board) = 0;
-
-	virtual void NineDartFinish1(Board& board) = 0;
-	virtual void NineDartFinish2(Board& board) = 0;
-	//virtual void AdvancedStrategy( Board& board) = 0;
-
-protected:
-	int16_t _score = 501;
-	std::string _name = "";
-	bool _hitDouble = false;
-	bool _hitTriple = false;
-	bool _hitOuter = false;
-	bool _hitBull = false;
+	virtual void ThrowSingle(uint16_t d, Board* board) = 0;
+	virtual void ThrowDouble(uint16_t d, Board* board) = 0;
+	virtual void ThrowTriple(uint16_t d, Board* board) = 0;
+	virtual bool ThrowBullPercentage(uint16_t percentage) = 0;
+	virtual void ThrowBull() = 0;
+	virtual void ThrowOuter() = 0;
 };
 
 #endif
