@@ -240,7 +240,9 @@ bool Player::ThrowBullPercentage(uint16_t percentage)
 void Player::ThrowBull()
 {
 	int r = rand() % 100 + 1;
-
+    
+    std::cout << "Aim Bull" << std::endl;
+    
 	if (r <= 80) //80% chance
 	{
 		SubtractScore(BULL); //subtract red inner bull from score
@@ -249,7 +251,7 @@ void Player::ThrowBull()
 	else if (r > 80 && r <= 90) //10% chance
 	{
 		SubtractScore(OUTER); //subtract outer bull from score
-        std::cout << "Scored Bull " << OUTER << " Score: " << _score << " = " << _score + OUTER << " - " << OUTER << std::endl;
+        std::cout << "Scored Outer " << OUTER << " Score: " << _score << " = " << _score + OUTER << " - " << OUTER << std::endl;
 	}
 	else
 	{
@@ -262,7 +264,9 @@ void Player::ThrowBull()
 void Player::ThrowOuter()
 {
 	int r = rand() % 100 + 1;
-
+    
+    std::cout << "Aim Outer" << std::endl;
+    
 	if (r <= 80) //80% chance
 	{
 		SubtractScore(OUTER); //subtract outer bull from score
@@ -271,7 +275,7 @@ void Player::ThrowOuter()
 	else if (r > 80 && r <= 90) //10% chance
 	{
 		SubtractScore(BULL); //subtract red inner bull from score
-		std::cout << "Scored Bull " << OUTER << " Score: " << _score << " = " << _score + OUTER << " - " << OUTER << std::endl;
+		std::cout << "Scored Outer " << OUTER << " Score: " << _score << " = " << _score + OUTER << " - " << OUTER << std::endl;
 	}
 	else
 	{

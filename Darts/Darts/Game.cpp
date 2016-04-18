@@ -9,7 +9,7 @@ Game::Game() : _players(0), _currentPlayer(0) {}
 Game::~Game()
 {
 	std::cout << "Game destructor called!\n";
-	for (auto& p : _players) {
+	for (auto* p : _players) {
 		delete p;
 		p = nullptr;
 	}
@@ -25,6 +25,7 @@ void Game::Play()
 	while (_choice != 0) {
 		for (auto* p : _players) { //make sure there are no remaining pointers in vector of players
 			delete p;
+            p = nullptr;
 		}
 		_players.clear(); //removes all elements from the vector
 
@@ -47,7 +48,7 @@ void Game::Play()
 
             for (int32_t i = 0; i < _simulateCounter; ++i)
             {
-                std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
+                std::cout << "Simulation: " << i + 1 << std::endl << std::endl;
                 PlayNineDartFinish(_players);
             }
 		} break;
@@ -160,12 +161,12 @@ int16_t Game::CheckWinningPosition(GenericPlayer* player, Board* board) //Playin
             for (uint8_t j = 20; j >= 0; --j) //Choose the highest possible number to aim for and still be able to win
             {
                 
-                if ( (player->GetScore() - (board->GetAtPosition(i, j) * 2)) == 0 ) { //check if hitting double will end the game
-                    player->ThrowDouble(board->GetAtPosition(i, j), board);
+                if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
+                    player->ThrowBull();
                     return 0;
                 }
-                else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
-                    player->ThrowBull();
+                else if ( (player->GetScore() - (board->GetAtPosition(i, j) * 2)) == 0 ) { //check if hitting double will end the game
+                    player->ThrowDouble(board->GetAtPosition(i, j), board);
                     return 0;
                 }
                 else if ( ( (player->GetScore() - (j * 3)) >= 2 ) ) { //check if scoring a triple will leave at least the smallest possible winning score which is 2
