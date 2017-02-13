@@ -1,25 +1,16 @@
 #include <iostream>
+#include <stdio.h>
 #include <time.h>
 #include <Windows.h>
 #include "Defines.h"
 #include "Game.h"
 
-Game::Game() : _players(0), _currentPlayer(0) {}
+Game::Game() : _players(0), _currentPlayer(0), _choice(1), _newScore(501), _temp(0), _simulateCounter(0) {}
 
-Game::~Game()
-{
-	std::cout << "Game destructor called!\n";
-	for (auto& p : _players) {
-		delete p;
-		p = nullptr;
-	}
-	delete _pBoard;
-    _pBoard = nullptr;
-}
+Game::~Game() {} //There is no deleting of pointers in vector of pointers '_players' or Board object
+				 //because they are all deleted when Game construstor is called anyway
 
-//void Game::Play(const std::vector<GenericPlayer*>& players)
-void Game::Play()
-{
+void Game::Play() {
 	srand(static_cast<unsigned int>(time(0)));
 	
 	while (_choice != 0) {
@@ -33,29 +24,29 @@ void Game::Play()
 		std::cin >> _choice;
 
 		switch (_choice) {
-		case (Exit) :
-			_choice = 0;
-			break;
-		case (CompVsComp) : {
-								uint16_t numPlayers = SetNumPlayers();
-								PushNames(numPlayers);
+			case (Exit) : {
+				_choice = 0;
+			} break;
 
-								for (auto& name : _names) {
-									_players.push_back(new Player(501, name));
-								}
+			case (Simulation) : {
+				uint16_t numPlayers = SetNumPlayers();
+				PushNames(numPlayers);
 
-								std::cout << "How many times you want to play? ";
-								std::cin >> _simulateCounter;
-								std::cout << std::endl;
+				for (auto& name : _names) {
+					_players.push_back(new Player(501, name)); //creating new player
+				}
 
-								for (int32_t i = 0; i < _simulateCounter; ++i)
-								{
-									std::cout << "Turn number: " << i + 1 << std::endl << std::endl;
-									PlayNineDartFinish(_players);
-								}
-		} break;
+				std::cout << "How many times you want to play? ";
+				std::cin >> _simulateCounter;
+				std::cout << std::endl;
 
-		default: break;
+				for (int32_t i = 0; i < _simulateCounter; ++i) {
+					std::cout << "Simulation: " << i + 1 << std::endl << std::endl;
+					PlayNineDartFinish(_players);
+				}
+			} break;
+
+			default: break;
 		}
 	}
 }
@@ -77,13 +68,11 @@ uint16_t Game::SetNumPlayers() {
     return numPlayers;
 }
 
-void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
-{	
+void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players) {	
 	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
 	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	//WORD index = 0;
 
-	// Remember how things were when we started
+	// Remember how things were at the beginning
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(hstdout, &csbi);
 
@@ -95,8 +84,9 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
     while(true) {
         if(player == nullptr) break; //if p is empty break loop
 		
-		WORD color = _currentPlayer + 3;
-		if (color >= 16) color = 3; //there's only 16 colors and 0 is black
+		WORD color = _currentPlayer + 2;
+		if ( color >= 16 || color == 0) color = 3; //there's only 16 colors and 0 is black
+
 		SetConsoleTextAttribute(hstdout, color);
 
         std::cout << player->GetName() << " Turn. " << "Score: " << player->GetScore() << std::endl;
@@ -106,18 +96,13 @@ void Game::PlayNineDartFinish(const std::vector<GenericPlayer*>& players)
         
         player = NextPlayer(); // if current player does not win set p to next player
     }
-
+	//Flush the buffer in order to prepare for the new simulation
 	FlushConsoleInputBuffer(hstdin);
-	// Keep users happy
 	SetConsoleTextAttribute(hstdout, csbi.wAttributes);
+
     DisplayEndGame(_currentPlayer);
 	
     std::cout << std::endl;
-}
-
-GenericPlayer* Game::GetCurrentPlayer() {
-    if(_players.size() == 0) return nullptr;
-    return _players[_currentPlayer];
 }
 
 GenericPlayer* Game::NextPlayer() { //get next player
@@ -127,8 +112,7 @@ GenericPlayer* Game::NextPlayer() { //get next player
     return _players[_currentPlayer];
 }
 
-void Game::Throw3Darts(GenericPlayer* player, Board* board)
-{
+void Game::Throw3Darts(GenericPlayer* player, Board* board) {
 	uint16_t _temp = player->GetScore();
     //First Throw
     if (!player->GetBusted()) //if not busted
@@ -147,24 +131,21 @@ void Game::Throw3Darts(GenericPlayer* player, Board* board)
     std::cout << std::endl;
 }
 
-int16_t Game::CheckWinningPosition(GenericPlayer* player, Board* board) //Playing Nine Dart Finish Strategy
-{
+int16_t Game::CheckWinningPosition(GenericPlayer* player, Board* board) { //Playing Nine Dart Finish Strategy
     if (player->GetScore() == 0) {
         return 0;
     }
-    else
-    {
-        for (uint8_t i = 1; i >= 0; --i) //loop used to iterate through board
-        {
-            for (uint8_t j = 20; j >= 0; --j) //Choose the highest possible number to aim for and still be able to win
-            {
-                
-                if ( (player->GetScore() - (board->GetAtPosition(i, j) * 2)) == 0 ) { //check if hitting double will end the game
-                    player->ThrowDouble(board->GetAtPosition(i, j), board);
+    else {
+        for (uint8_t i = 1; i >= 0; --i) { //loop used to iterate through board
+
+            for (uint8_t j = 20; j >= 0; --j) { //Choose the highest possible number to aim for and still be able to win
+
+                if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
+                    player->ThrowBull();
                     return 0;
                 }
-                else if ((player->GetScore()) - BULL == 0) { //check if hitting the bull will end the game
-                    player->ThrowBull();
+                else if ( (player->GetScore() - (board->GetAtPosition(i, j) * 2)) == 0 ) { //check if hitting double will end the game
+					player->ThrowDouble(board->GetAtPosition(i, j), board);
                     return 0;
                 }
                 else if ( ( (player->GetScore() - (j * 3)) >= 2 ) ) { //check if scoring a triple will leave at least the smallest possible winning score which is 2
@@ -185,8 +166,7 @@ int16_t Game::CheckWinningPosition(GenericPlayer* player, Board* board) //Playin
     }
 }
 
-void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
-{
+void Game::CheckBusted(GenericPlayer* player, uint16_t temp) {
     if (player->GetScore() < 0 || player->GetScore() == 1 || player->GetBusted()) //Busted if score is smaller then 0 or equal to 1 or not finished on double
     {
         player->SetScore(temp);
@@ -194,8 +174,7 @@ void Game::CheckBusted(GenericPlayer* player, uint16_t temp)
     }
 }
 
-GenericPlayer* Game::WhoFirst()
-{ //determines who throws first
+GenericPlayer* Game::WhoFirst() { //determines who throws first
     do { // aim for bull until someone scores
 
         for(long i = _currentPlayer; i < _players.size(); ++i) //last wining player aims bull first
@@ -217,8 +196,7 @@ GenericPlayer* Game::WhoFirst()
     } while(true);
 }
 
-void Game::DisplayEndGame(std::size_t winnerIndex)
-{   // display winner
+void Game::DisplayEndGame(std::size_t winnerIndex) {   // display winner
     std::cout << _players[winnerIndex]->GetName() << " has won this round!" << std::endl;
     _players[winnerIndex]->IncrementWinCounter();
     
@@ -227,8 +205,7 @@ void Game::DisplayEndGame(std::size_t winnerIndex)
     }
 }
 
-void Game::DisplayInstructions()
-{
+void Game::DisplayInstructions() {
 	std::cout << "\n\nWeclome to the Darts 501 Game Simulator!";
 	std::cout << "\nYou can choose how many players will compete";
 	std::cout << "\nAs well as how many games you want to simulate.";
@@ -241,12 +218,3 @@ void Game::DisplayInstructions()
 	std::cout << "1 - Simulate\n";
 	std::cout << "0 - Exit\n";
 }
-
-//do {
-//	std::cin >> _simulateCounter;
-//	std::cout << std::endl;
-//	_fail = std::cin.fail();
-//
-//	std::cin.clear();
-//	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//} while (_fail);
