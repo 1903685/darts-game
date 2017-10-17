@@ -1,7 +1,7 @@
 # Site settings
 title: Matthew Wallace
 description: "Dangerous blog"
-baseurl: '' # for test: remove string '/space-jekyll-template' to ''
+baseurl: 'darts-game' # for test: remove string '/space-jekyll-template' to ''
 url: "https://matt360.github.io" # for test: remove string 'http://victorvoid.github.io' to '' but in production: 'https://yourusername.githu.io'
 # User settings
 username: matt360
